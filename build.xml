@@ -47,12 +47,10 @@
     </path>	
  
     <!-- load scala's ant tasks -->
-    <taskdef resource="scala/tools/ant/antlib.xml">
+   <taskdef resource="scala/tools/ant/antlib.xml">
     <classpath>
-      <pathelement location="${scala.home}/lib/scala-compiler.jar"   />
-      <!-- NEW: For scala 2.10.2 you need scala-reflect: -->
-      <pathelement location="${scala.home}/lib/scala-reflect.jar"   />
-      <pathelement location="${scala-library.jar}"   />
+      <pathelement location="${env.SCALA_HOME}/lib/scala-compiler.jar" />
+      <pathelement location="${env.SCALA_HOME}/lib/scala-library.jar" />
     </classpath>
   </taskdef>
 	
@@ -90,6 +88,23 @@
     </scaladoc>
   </target>
  
+
+<!--   ant test : run unit tests -->
+  <target name="test" depends="build">
+    <mkdir dir="${report.dir}"/>
+    <mkdir dir="${junit.dir}"/>
+    <mkdir dir="${jacoco.dir}"/>
+  </target>
+
+  <!--   ant report : generate the JUnit and code coverage reports  -->
+  <target name="report" depends="test">     
+    <junitreport todir="${junit.dir}">
+      <fileset dir="${junit.dir}" includes="TEST-*.xml"/>
+      <report todir="${junit.dir}"/>
+    </junitreport>
+ 
+  </target>
+
   <target name="package" depends="doc" unless="build.uptodate">
     <mkdir dir="${build-lib.dir}"/>
     <jar destfile="${build-lib.dir}/project.jar">
