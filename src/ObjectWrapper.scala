@@ -19,7 +19,7 @@ class ObjectWrapper[N] {
   def getValue: N = this.value
   def getContainer: SetWrapper[N] = this.container
   def setContainer(s: SetWrapper[N]): Unit = this.container = s
-  def getPair: Pair = getContainer.getPair()
+  def getPair: Pair[N] = getContainer.getPair()
 
   4
 }

@@ -13,7 +13,7 @@ class OpposingGroups[N] {
 
     // Fields
 
-      val opposingGroups: Set[Pair] = new Set[Pair]()
+      var opposingGroups: Set[Pair[N]] = new Set[Pair[N]]()
 
     // Methods
 
@@ -22,15 +22,15 @@ class OpposingGroups[N] {
       * @param x the object to add to the known objects list
       * @return
       */
-    def create(x: N): ObjectWrapper = {
-        val wrapper : ObjectWrapper = new ObjectWrapper(x)
-        val set: SetWrapper = new SetWrapper(new Set(wrapper))
-        val newPair: Pair = new Pair(set, new SetWrapper())
+    def create(x: N): ObjectWrapper[N] = {
+        val wrapper : ObjectWrapper[N] = new ObjectWrapper[N](x)
+        val set: SetWrapper[N] = new SetWrapper[N](new Set[ObjectWrapper[N]](wrapper))
+        val newPair: Pair[N] = new Pair(set, new SetWrapper())
         addPair(newPair)
     }
 
     // Algorithm 2 Oppose: Updates the database with a new Opposition - O(1)
-    def procedure oppose(x : ObjectWrapper; y : ObjectWrapper): Boolean = {
+    def oppose(x : ObjectWrapper[N], y : ObjectWrapper[N]): Boolean = {
       /*  2: if x; y are not in the same Pair then
           3: merge(x:getP air(); x:getContainer(); y:getP air(); y:getContainer())
         4: else
@@ -46,7 +46,7 @@ class OpposingGroups[N] {
 
 
     //Algorithm 3 Merge: Combine Pairs - O(1)
-    def merge(xp : Pair; xs : SetWrapper; yp : Pair; ys : SetWrapper): Unit = {
+    def merge(xp : Pair[N], xs : SetWrapper[N], yp : Pair[N], ys : SetWrapper[N]): Unit = {
         /*
             2: xs:appendSet(ys)
     3: xp:getOpponentSet(xs).appendSet(ys:getOpponents())
@@ -56,7 +56,7 @@ class OpposingGroups[N] {
 
 
    // Algorithm 4 Add Pair to Database - O(1)
-    def addPair(toAdd : Pair): Unit = {
+    def addPair(toAdd : Pair[N]): Unit = {
         /*
         2: globalGroups   globalGroups + toAdd
       Algorithm 5 Remove Pairs from Database - O(1)
@@ -66,7 +66,7 @@ class OpposingGroups[N] {
     }
 
     // Algorithm 6 Check if ObjectWrappers are Opponents - O(1)
-    def opponents(x : ObjectWrapper; y : ObjectWrapper]): Try[Boolean] = {
+    def opponents(x : ObjectWrapper[N], y : ObjectWrapper[N]): Try[Boolean] = {
        /* 2: if x: getP air () = y: getP air () then
         3: if x: getContainer () = y: getContainer () then
           4: report false
