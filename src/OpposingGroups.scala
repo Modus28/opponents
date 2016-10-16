@@ -37,11 +37,19 @@ class OpposingGroups[N] {
     */
   def addPair(toAdd: Pair[N]): Unit = opposingGroups += toAdd
 
-  /** Remove Pairs from Database - O(1)
+  /** Oppose: Updates the database with a new Opposition - O(1)
     *
-    * @param toDel the pairs to remove from the database
+    * @param x the object that opposes y
+    * @param y the object that opposes x
     */
-  def removePair(toDel: Set[Pair[N]]): Unit = opposingGroups --= toDel
+  def oppose(x: ObjectWrapper[N], y: ObjectWrapper[N]): Unit = {
+    if (!(x.getPair equals y.getPair)) {
+      merge(x.getPair, x.getContainer, y.getPair, y.getContainer)
+    }
+    else {
+      throw new IllegalArgumentException
+    }
+  }
 
 
   /*
@@ -50,20 +58,6 @@ class OpposingGroups[N] {
    It makes more sense to require that queries are only made on the N-types that have been wrapped,
    as there is zero loss in functionality.
    */
-
-  /** Oppose: Updates the database with a new Opposition - O(1)
-    *
-    * @param x the object that opposes y
-    * @param y the object that opposes x
-    */
-  def oppose(x: ObjectWrapper[N], y: ObjectWrapper[N]): Unit = {
-     if (!(x.getPair equals y.getPair)){
-       merge(x.getPair, x.getContainer, y.getPair, y.getContainer)
-     }
-     else{
-       throw new IllegalArgumentException
-     }
-  }
 
   /** Combine Pairs - O(1)
     * Adds the values of one pair to another, and removes the original one.
@@ -79,11 +73,17 @@ class OpposingGroups[N] {
     removePair(Set(yp))
   }
 
+  /** Remove Pairs from Database - O(1)
+    *
+    * @param toDel the pairs to remove from the database
+    */
+  def removePair(toDel: Set[Pair[N]]): Unit = opposingGroups --= toDel
+
   /** Check if ObjectWrappers are Opponents - O(1)
     *
-    * @param x
-    * @param y
-    * @return
+    * @param x the object that may be an opponent of y
+    * @param y the object that may be an opponent of x
+    * @return Success containing the truth value of the check, or Failure if impossible to do so
     */
   def opponents(x: ObjectWrapper[N], y: ObjectWrapper[N]): Try[Boolean] = {
     if (x.getPair equals y.getPair) {
@@ -102,5 +102,6 @@ class OpposingGroups[N] {
 
   def main(args: Array[String]): Unit = {
     println("We are compiling")
+
   }
 }

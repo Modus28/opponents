@@ -5,13 +5,13 @@
   *
   * Object Wrapper: Adds functionality to the generic type N
   */
-class ObjectWrapper[N] (value: N) {
+class ObjectWrapper[N](value: N) {
   // Fields
   var container: SetWrapper[N] = _ // The SetWrapper that holds this ObjectWrapper
 
   // Methods
 
-  /**  Delegate hashcode to the contained value
+  /** Delegate hashcode to the contained value
     * This allows us to change pointers without breaking hashing
     *
     * Because the contained value is either generic or a Ninja,

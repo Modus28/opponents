@@ -5,12 +5,12 @@
   *
   * SetWrapper:  Contains a Set of ObjectWrappers that are not opponents of each other
   */
-class SetWrapper[N] private () {
+class SetWrapper[N] private() {
 
 
   // Fields
   var objects: Set[ObjectWrapper[N]] = _
-  var pair: Pair[N] = new Pair[N](null,null)
+  var pair: Pair[N] = new Pair[N](null, null)
 
   // Methods
 
@@ -39,17 +39,18 @@ class SetWrapper[N] private () {
     */
   def getObjects: Set[ObjectWrapper[N]] = this.objects
 
-  /** Set the set of ObjectWrappers to the input
-    *
-    * @param obj the set of ObjectWrappers to set
-    */
-  def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
-
   /** Set the pair containing this to the input
     *
     * @param pair the pair to update the pair field to
     */
   def setContainer(pair: Pair[N]): Unit = this.pair = pair
+
+
+  /** Set the set of ObjectWrappers to the input
+    *
+    * @param obj the set of ObjectWrappers to set
+    */
+  def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
 
   //  Constructors
 
@@ -66,6 +67,7 @@ class SetWrapper[N] private () {
     setObjects(objects)
   }
 
+  // Implicit Definitons
 
   /** Set operations, such as contains, will be delegated to 'objects'
     *

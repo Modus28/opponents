@@ -5,7 +5,7 @@
   *
   * Pair: Contains two SetWrappers that are in diferent groups
   */
-class Pair[N] (primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
+class Pair[N](primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
 
   // Methods
 
@@ -15,14 +15,14 @@ class Pair[N] (primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
     * @return the opponents of the input
     */
   def getOpponentSet(x: SetWrapper[N]): SetWrapper[N] = {
-     if (x equals primarySet) {
-       secondarySet
-     }
-     else if (x equals secondarySet) {
-        primarySet
-     }
-     else {
-       throw new IllegalArgumentException
-     }
+    if (x equals primarySet) {
+      secondarySet
+    }
+    else if (x equals secondarySet) {
+      primarySet
+    }
+    else {
+      throw new IllegalArgumentException
+    }
   }
 }
