@@ -5,29 +5,19 @@
   *
   * Pair: Contains two SetWrappers that are in diferent groups
   */
-class Pair[N] {
-  // Fields
-  var primarySet: SetWrapper[N] = new SetWrapper[N]()
-  // First SetWrapper
-  var secondarySet: SetWrapper[N] = new SetWrapper[N]() // The direct opponent of primarySet
+class Pair[N] (primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
 
   // Methods
-  //Algorithm 7 getOpponentSet: Get the SetWrapper that is the opponent of the argument
+  //Algorithm 7: getOpponentSet: Get the SetWrapper that is the opponent of the argument
   def getOpponentSet(x: SetWrapper[N]): SetWrapper[N] = {
-    /* 2: if x = primarySet then
-       3: return secondarySet
-     4: if x = secondarySet then
-       5: return primarySet
-     6: else
-     7: throw Exception*/
-    new SetWrapper[N]()
-  }
-
-
-  // Constructors
-  def this(primary: SetWrapper[N], secondary: SetWrapper[N]) = {
-    this
-    this.primarySet = primary
-    this.secondarySet = secondary
+     if (x equals primarySet) {
+       secondarySet
+     }
+     if (x equals secondarySet) {
+        primarySet
+     }
+     else {
+       throw new IllegalArgumentException
+     }
   }
 }
