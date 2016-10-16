@@ -7,8 +7,9 @@
   */
 class ObjectWrapper[N] {
   // Fields
-    val value: N = ??? //the generic object that this ObjectWrapper contains
-    var container: SetWrapper[N] = ??? // The SetWrapper that holds this ObjectWrapper
+  var value: N = ???
+  //the generic object that this ObjectWrapper contains
+  var container: SetWrapper[N] = ??? // The SetWrapper that holds this ObjectWrapper
 
   // Methods
 
@@ -17,9 +18,15 @@ class ObjectWrapper[N] {
 
 
   def getValue: N = this.value
-  def getContainer: SetWrapper[N] = this.container
-  def setContainer(s: SetWrapper[N]): Unit = this.container = s
+
   def getPair: Pair[N] = getContainer.getPair()
 
-  4
+  def getContainer: SetWrapper[N] = this.container
+
+  def setContainer(s: SetWrapper[N]): Unit = this.container = s
+
+  def this(value: N) = {
+    this
+    this.value = value
+  }
 }
