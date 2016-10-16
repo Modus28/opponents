@@ -1,67 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project name="Opponents" default="build" basedir=".">
-	<description>Project Build Script</description>
-
-	<!-- targets -->
-	<target name="build" depends="package,init" description="Build whole project"/>
-
-	<target name="clean" depends="init" description="Remove previous build files">
-		<delete dir="${build.dir}" includeemptydirs="true" quiet="true"/>
-	</target>
-
+<project name="AntCompileTest" default="compile" basedir=".">
+	<!-- mostly from: http://www.scala-lang.org/node/98 -->
+	<property name="sources.dir" value="src" />
+	<property name="scala-source.dir" value="main/scala" />
+	<property name="scala-test.dir" value="main/test" />
+	<property name="build.dir" value="classes" />
+	<!-- set scala.home -->
+	<property environment="env" />
+	<property name="scala.home" value="${env.SCALA_HOME}" />
 	<target name="init">
-		<property environment="env"/>
-
-		<!-- check for required tools -->
-		<fail message="Missing SCALA_HOME variable in OS environment">
-			<condition>
-				<isset property="${env.SCALA_HOME}"/>
-			</condition>
-		</fail>
-		<fail message="Missing JAVA_HOME variable in OS environment">
-			<condition>
-				<isset property="${env.JAVA_HOME}"/>
-			</condition>
-		</fail>
-
-		<!-- variables for paths and files -->
-		<property name="src.dir" location="${basedir}/src"/>
-		<property name="lib.dir" location="${basedir}/lib"/>
-		<property name="build.dir" location="${basedir}/build"/>
-		<property name="build-classes.dir" location="${build.dir}/classes"/>
-		<property name="build-lib.dir" location="${build.dir}/lib"/>
-		<property name="build-doc.dir" location="${build.dir}/doc"/>
-		<property name="java.dir" location="${env.JAVA_HOME}"/>
-		<property name="scala.dir" location="${env.SCALA_HOME}"/>
 		<property name="scala-library.jar"
 value="${scala.home}/lib/scala-library.jar" />
-<property name="scala-compiler.jar"
+		<property name="scala-compiler.jar"
 value="${scala.home}/lib/scala-compiler.jar" />
-<property name="scala.reflect"
+		<property name="scala.reflect"
 value="${scala.home}/lib/scala-reflect.jar"/>
-		<property name="scala.lib" value="${scala.home}/lib"/>
-
-
-		<path id="project.classpath">
-			<pathelement location="${build.dir}" />
-
-			<fileset dir="${env.SCALA_HOME}/lib/">
-				<include name="*.jar" />
-			</fileset>
-
-			<fileset dir="${lib.dir}">
-				<include name="*.jar" />
-			</fileset>
-		</path>
-		<path id="build.classpath">
-			<pathelement location="${scala-library.jar}"   />
-			<!--<pathelement location="${your.path}"   />-->
-			<pathelement location="${build.dir}"   />
-		</path>
-		<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar" />
-		<property name="scala-compiler.jar" value="${scala.home}/lib/scala-compiler.jar" />
-		<property name="scala.reflect" value="${scala.home}/lib/scala-reflect.jar"/>
 		<path id="build.classpath">
 			<pathelement location="${scala-library.jar}" />
 			<pathelement location="${build.dir}" />
@@ -73,56 +25,7 @@ value="${scala.home}/lib/scala-reflect.jar"/>
 				<pathelement location="${scala.reflect}"/>
 			</classpath>
 		</taskdef>
-
-
-
-
-		<path id="project.classpath">
-			<pathelement location="${scala-library.jar}"/>
-			<pathelement location="${build-classes.dir}"/>
-			<!-- used during recompilation -->
-		</path>
-
-		<path id="scala.classpath">
-			<pathelement location="${scala-compiler.jar}"/>
-			<pathelement location="${scala-reflect.jar}"/>
-			<pathelement location="${scala-library.jar}"/>
-		</path>	
-
-		<property
-		name="sources.dir"
-		value="${base.dir}/sources"
-		 />
-		<property
-		name="build.dir"
-		value="${base.dir}/build"
-		 />
-		<property
-		  name="scala-library.jar"
-		  value="${scala.home}/lib/scala-library.jar"
-		   />
-		<path id="build.classpath">
-			<pathelement location="${scala-library.jar}"   />
-			<!--<pathelement location="${your.path}"   />-->
-			<pathelement location="${build.dir}"   />
-		</path>
-
-		<!-- load scala's ant tasks -->
-
-
-
-		<!-- print where this project will get scala and java from -->
-		<echo message="Init project"/>
-		<echo message=" with scala.dir = ${scala.dir}"/>
-		<echo message=" with java.dir = ${java.dir}"/>
-
-		<!-- check if any files has been modified since last build -->
-		<uptodate property="build.uptodate" targetfile="${build.dir}/build.done">
-			<srcfiles dir= "${src.dir}" includes="**"/>
-			<srcfiles dir= "${lib.dir}" includes="**"/>
-		</uptodate>
 	</target>
-
 	<target name="compile" depends="init">
 		<mkdir dir="${build.dir}" />
 		<scalac srcdir="${sources.dir}"
@@ -132,48 +35,5 @@ deprecation="on">
 			<include name="${scala-source.dir}/**/*.scala" />
 			<exclude name="${scala-test.dir}/**/*.scala" />
 		</scalac>
-	</target>
-
-	<target name="doc" depends="compile" unless="build.uptodate">
-		<mkdir dir="${build-doc.dir}"/>
-		<scaladoc
-      srcdir="${src.dir}"
-      destdir="${build-doc.dir}"
-      doctitle="Project API documentation"
-      classpathref="project.classpath">
-			<include name="**/*.scala"/>
-		</scaladoc>
-	</target>
-
-
-	<!--   ant test : run unit tests -->
-	<target name="test" depends="build">
-		<mkdir dir="${report.dir}"/>
-		<mkdir dir="${junit.dir}"/>
-		<mkdir dir="${jacoco.dir}"/>
-	</target>
-
-	<!--   ant report : generate the JUnit and code coverage reports  -->
-	<target name="report" depends="test">     
-		<junitreport todir="${junit.dir}">
-			<fileset dir="${junit.dir}" includes="TEST-*.xml"/>
-			<report todir="${junit.dir}"/>
-		</junitreport>
-
-	</target>
-
-	<target name="package" depends="doc" unless="build.uptodate">
-		<mkdir dir="${build-lib.dir}"/>
-		<jar destfile="${build-lib.dir}/project.jar">
-			<fileset dir="${build-classes.dir}"/>
-		</jar>
-		<jar destfile="${build-lib.dir}/project-src.jar">
-			<fileset dir="${src.dir}" includes="**/*.scala"/>
-		</jar>
-		<jar destfile="${build-lib.dir}/project-doc.jar">
-			<fileset dir="${build-doc.dir}"/>
-		</jar>
-		<touch file="${build.dir}/build.done"/>
-		<!-- mark build as up-to-date -->
 	</target>
 </project>
