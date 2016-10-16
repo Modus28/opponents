@@ -7,6 +7,9 @@
 	<!-- set scala.home -->
 	<property environment="env" />
 	<property name="scala.home" value="${env.SCALA_HOME}" />
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${ant.home}/lib/jacocoant.jar"/>
+	</taskdef>
 	<target name="init">
   <property
     name="scala-library.jar"
