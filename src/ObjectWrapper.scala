@@ -5,10 +5,8 @@
   *
   * Object Wrapper: Adds functionality to the generic type N
   */
-class ObjectWrapper[N] {
+class ObjectWrapper[N] (value: N) {
   // Fields
-  var value: N = ???
-  //the generic object that this ObjectWrapper contains
   var container: SetWrapper[N] = ??? // The SetWrapper that holds this ObjectWrapper
 
   // Methods
@@ -25,8 +23,5 @@ class ObjectWrapper[N] {
 
   def setContainer(s: SetWrapper[N]): Unit = this.container = s
 
-  def this(value: N) = {
-    this
-    this.value = value
-  }
+
 }
