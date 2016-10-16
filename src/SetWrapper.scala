@@ -5,21 +5,27 @@
   *
   * SetWrapper:  Contains a Set of ObjectWrappers that are not opponents of each other
   */
-class SetWrapper[N] {
+class SetWrapper[N] private () {
 
 
   // Fields
-  var objects: Set[ObjectWrapper[N]] = ???
-  var pair: Pair[N] = new Pair[N]()
+  var objects: Set[ObjectWrapper[N]] = _
+  var pair: Pair[N] = new Pair[N](null,null)
 
   // Methods
 
-  // Algorithm 8 Get the SetWrapper that opposes this SetWrapper
+  /** Return the SetWrapper that opposes this SetWrapper
+    *
+    * @return the opponents of this SetWrapper
+    */
   def getOpponents: SetWrapper[N] = getPair.getOpponentSet(this)
 
-  def getPair(): Pair[N] = this.pair
+  def getPair: Pair[N] = this.pair
 
-  //Algorithm 9 Append a set to this SetWrapper's contained set
+  /** Append a set to this SetWrapper's contained set
+    *
+    * @param toAppend the set to add to our contained set
+    */
   def appendSet(toAppend: SetWrapper[N]): Unit = {
     for (objWrapper <- toAppend.getObjects) {
       objWrapper.setContainer(this)
@@ -27,22 +33,45 @@ class SetWrapper[N] {
     setObjects(objects ++ toAppend)
   }
 
+  /** Return the set of ObjectWrappers inside this
+    *
+    * @return set of ObjectWrappers this contains
+    */
   def getObjects: Set[ObjectWrapper[N]] = this.objects
 
+  /** Set the set of ObjectWrappers to the input
+    *
+    * @param obj the set of ObjectWrappers to set
+    */
   def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
 
+  /** Set the pair containing this to the input
+    *
+    * @param pair the pair to update the pair field to
+    */
   def setContainer(pair: Pair[N]): Unit = this.pair = pair
 
   //  Constructors
-  // Set each ObjectWrapper's container field to this
+
+  /** Set each ObjectWrapper's container field to input
+    * And initialize a SetWrapper
+    *
+    * @param objects the objects to insert into this
+    */
   def this(objects: Set[ObjectWrapper[N]]) = {
     this
     for (objWrapper <- objects) {
       objWrapper.setContainer(this)
     }
+    setObjects(objects)
   }
 
-  //   Set operations, such as contains, will be delegated to 'objects'
+
+  /** Set operations, such as contains, will be delegated to 'objects'
+    *
+    * @param d the SetWrapper to delegate from
+    * @return the set contained in the SetWrapper
+    */
   implicit def delegateToSet(d: SetWrapper[N]): Set[ObjectWrapper[N]] = d.getObjects
 
 }
