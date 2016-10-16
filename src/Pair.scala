@@ -8,12 +8,17 @@
 class Pair[N] (primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
 
   // Methods
-  //Algorithm 7: getOpponentSet: Get the SetWrapper that is the opponent of the argument
+
+  /** Get the SetWrapper that is the opponent of the argument
+    *
+    * @param x the SetWrapper to find the opponents of
+    * @return the opponents of the input
+    */
   def getOpponentSet(x: SetWrapper[N]): SetWrapper[N] = {
      if (x equals primarySet) {
        secondarySet
      }
-     if (x equals secondarySet) {
+     else if (x equals secondarySet) {
         primarySet
      }
      else {
