@@ -37,7 +37,8 @@ class OpposingGroups[N] {
     */
   def addPair(toAdd: Pair[N]): Unit = opposingGroups += toAdd
 
-  /** Oppose: Updates the database with a new Opposition - O(1)
+  /** Oppose: Updates the database with a new Opposition
+    * O(n) worst case, O(1) average case
     *
     * @param x the object that opposes y
     * @param y the object that opposes x
@@ -51,13 +52,6 @@ class OpposingGroups[N] {
     }
   }
 
-
-  /*
-   A Method to allow direct N-type input to oppose and opponent could be added, but they would
-   have a far worse time complexity.
-   It makes more sense to require that queries are only made on the N-types that have been wrapped,
-   as there is zero loss in functionality.
-   */
 
   /** Combine Pairs - O(1)
     * Adds the values of one pair to another, and removes the original one.

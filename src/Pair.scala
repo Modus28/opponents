@@ -7,9 +7,7 @@
   */
 class Pair[N](primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
 
-  // Methods
-
-  /** Get the SetWrapper that is the opponent of the argument
+  /** Return the SetWrapper that is the opponent of the argument - O(1)
     *
     * @param x the SetWrapper to find the opponents of
     * @return the opponents of the input

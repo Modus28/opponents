@@ -7,8 +7,8 @@
   */
 class SetWrapper[N] private() {
 
-
   // Fields
+
   var objects: Set[ObjectWrapper[N]] = _
   var pair: Pair[N] = new Pair[N](null, null)
 
@@ -20,6 +20,10 @@ class SetWrapper[N] private() {
     */
   def getOpponents: SetWrapper[N] = getPair.getOpponentSet(this)
 
+  /** Returns the pair that contains this
+    *
+    * @return pair holding this
+    */
   def getPair: Pair[N] = this.pair
 
   /** Append a set to this SetWrapper's contained set
@@ -67,7 +71,7 @@ class SetWrapper[N] private() {
     setObjects(objects)
   }
 
-  // Implicit Definitons
+  // Implicit Definitions
 
   /** Set operations, such as contains, will be delegated to 'objects'
     *
