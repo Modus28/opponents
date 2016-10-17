@@ -1,5 +1,4 @@
 <project name="opponents" default="compile" basedir=".">
-	<!-- mostly from: http://www.scala-lang.org/node/98 -->
 	<property name="sources.dir" value="src" />
 	<property name="scala-source.dir" value="src" />
 	<property name="scala-test.dir" value="test" />
@@ -39,8 +38,8 @@
 	<target name="init">
 		<!-- print where this project will get scala and java from -->
 		<echo message="Init project"/>
-		<echo message=" with scala.dir = ${scala.dir}"/>
-		<echo message=" with java.dir = ${java.dir}"/>
+		<echo message=" with scala.dir = ${env.SCALA_HOME}"/>
+		<echo message=" with java.dir = ${env.JAVA_HOME}"/>
 		<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar" />
 		<path id="build.classpath">
 			<pathelement location="${scala-library.jar}"   />
