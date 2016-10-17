@@ -4,12 +4,10 @@
 	<property name="scala-source.dir" value="src" />
 	<property name="scala-test.dir" value="test" />
 	<property name="build.dir" value="classes" />
-	<!-- set scala.home -->
 	<property environment="env" />
 	<property name="scala.home" value="${env.SCALA_HOME}" />
 	<property name="src.dir" location="${basedir}/src"/>
 	<property name="lib.dir" location="${basedir}/lib"/>
-	
 	<property name="build-lib.dir" location="${build.dir}/lib"/>
 	<property name="build-doc.dir" location="${build.dir}/doc"/>
 	<property name="java.dir" location="${env.JAVA_HOME}"/>
@@ -17,15 +15,12 @@
 	<property name="scala-library.jar" location="${scala.dir}/lib/scala-library.jar"/>
 	<property name="scala-reflect.jar" location="${scala.dir}/lib/scala-reflect.jar"/>
 	<property name="scala-compiler.jar" location="${scala.dir}/lib/scala-compiler.jar"/>
+	<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar" />
 	<path id="project.classpath">
 		<pathelement location="${scala-library.jar}"/>
 		<pathelement location="${build.dir}"/>
 		<!-- used during recompilation -->
 	</path>
-	<property
-    name="scala-library.jar"
-    value="${scala.home}/lib/scala-library.jar"
-     />
 	<path id="build.classpath">
 		<pathelement location="${scala-library.jar}"   />
 		<!--<pathelement location="${your.path}"   />-->
@@ -42,10 +37,11 @@
 
 
 	<target name="init">
-		<property
-			name="scala-library.jar"
-			value="${scala.home}/lib/scala-library.jar"
-		/>
+		<!-- print where this project will get scala and java from -->
+		<echo message="Init project"/>
+		<echo message=" with scala.dir = ${scala.dir}"/>
+		<echo message=" with java.dir = ${java.dir}"/>
+		<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar" />
 		<path id="build.classpath">
 			<pathelement location="${scala-library.jar}"   />
 			<!--<pathelement location="${your.path}"   />-->
@@ -65,6 +61,7 @@
 	<target name="build" depends="compile">
 		<!-- Just calls compile -->
 		<!--  unless="build.uptodate" -->
+		
 	</target>
 
 
@@ -80,6 +77,8 @@
 		</scalac>
 	</target>
 
+	
+	
 	<target  name="scaladoc" depends="build">
 		<mkdir dir="${basedir}/doc"> </mkdir>
 		<scaladoc
