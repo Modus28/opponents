@@ -26,7 +26,8 @@ class OpposingGroups[N] {
   def create(x: N): ObjectWrapper[N] = {
     val wrapper: ObjectWrapper[N] = new ObjectWrapper[N](x)
     val set: SetWrapper[N] = new SetWrapper[N](Set(wrapper))
-    val newPair: Pair[N] = new Pair(set, new SetWrapper[N](null))
+    val newPair: Pair[N] = new Pair(set, new SetWrapper[N]())
+    set.setContainer(newPair)
     addPair(newPair)
     wrapper
   }
@@ -62,8 +63,8 @@ class OpposingGroups[N] {
     * @param ys The set in yp that will be added inside xs
     */
   def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
-    xs.appendSet(ys)
     xp.getOpponentSet(xs).appendSet(ys.getOpponents)
+    xs.appendSet(ys)
     removePair(Set(yp))
   }
 
@@ -79,17 +80,17 @@ class OpposingGroups[N] {
     * @param y the object that may be an opponent of x
     * @return Success containing the truth value of the check, or Failure if impossible to do so
     */
-  def opponents(x: ObjectWrapper[N], y: ObjectWrapper[N]): Try[Boolean] = {
+  def opponents(x: ObjectWrapper[N], y: ObjectWrapper[N]): Option[Boolean] = {
     if (x.getPair equals y.getPair) {
       if (x.getContainer equals y.getContainer) {
-        Success(true)
+        Option(true)
       }
       else {
-        Success(false)
+        Option(false)
       }
     }
     else {
-      Failure(new NoSuchFieldException)
+      None
     }
   }
 

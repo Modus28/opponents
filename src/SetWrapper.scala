@@ -6,12 +6,12 @@ import scala.language.implicitConversions
   *
   * SetWrapper:  Contains a Set of ObjectWrappers that are not opponents of each other
   */
-class SetWrapper[N] private() {
+class SetWrapper[N]  {
 
   // Fields
 
   var objects: Set[ObjectWrapper[N]] = _
-  var pair: Pair[N] = new Pair[N](null, null)
+  var pair: Pair[N] = _
 
   // Methods
 
@@ -32,10 +32,12 @@ class SetWrapper[N] private() {
     * @param toAppend the set to add to our contained set
     */
   def appendSet(toAppend: SetWrapper[N]): Unit = {
-    for (objWrapper <- toAppend.getObjects) {
-      objWrapper.setContainer(this)
+    if (Option(toAppend.getObjects).isDefined) {
+      for (objWrapper <- toAppend.getObjects) {
+        objWrapper.setContainer(this)
+      }
+      setObjects(objects ++ toAppend)
     }
-    setObjects(objects ++ toAppend)
   }
 
   /** Return the set of ObjectWrappers inside this
@@ -66,10 +68,12 @@ class SetWrapper[N] private() {
     */
   def this(objects: Set[ObjectWrapper[N]]) = {
     this
-    for (objWrapper <- objects) {
-      objWrapper.setContainer(this)
+    if(Option(objects).isDefined) {
+      for (objWrapper <- objects) {
+        objWrapper.setContainer(this)
+      }
+      setObjects(objects)
     }
-    setObjects(objects)
   }
 
   // Implicit Definitions
