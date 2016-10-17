@@ -9,8 +9,7 @@
 	<property name="scala.home" value="${env.SCALA_HOME}" />
 	<property name="src.dir" location="${basedir}/src"/>
 	<property name="lib.dir" location="${basedir}/lib"/>
-	<property name="build.dir" location="${basedir}/build"/>
-
+	
 	<property name="build-lib.dir" location="${build.dir}/lib"/>
 	<property name="build-doc.dir" location="${build.dir}/doc"/>
 	<property name="java.dir" location="${env.JAVA_HOME}"/>
@@ -63,17 +62,13 @@
 	</target>
 
 
-	<target name="build" depends="init">
-		<mkdir dir="${build.dir}"   />
-		<scalac srcdir="${sources.dir}"
-				destdir="${build.dir}"
-				classpathref="build.classpath">
-			<include name="*.scala"   />
-		</scalac>
+	<target name="build" depends="compile">
+		<!-- Just calls compile -->
+		<!--  unless="build.uptodate" -->
 	</target>
 
 
-	<target name="compile" depends="init" unless="build.uptodate">
+	<target name="compile" depends="init">
 		<mkdir dir="${build.dir}"/>
 		<scalac
 			destdir="${build.dir}"
@@ -85,4 +80,16 @@
 		</scalac>
 	</target>
 
+	<target  name="scaladoc" depends="build">
+		<mkdir dir="${basedir}/doc"> </mkdir>
+		<scaladoc
+			srcdir="${src.dir}"
+			destdir="${basedir}/doc"
+			doctitle="ScalaDoc"
+			classpathref="project.classpath">
+			<include name="*.scala"/>
+		</scaladoc>
+		
+		
+   </target> 
 </project>
