@@ -26,24 +26,37 @@ class OpponentsTest {
   }
 
   // Tests
+
+  /**
+    * Attempts to create the database and check that values were added to it
+    */
   @Test
   def testCreate(): Unit = {
     createDatabaseWithNinjas()
     assert(database.getOpposingDatabase.nonEmpty)
+    assert(database.getOpposingDatabase.size.equals(2))
   }
 
+  /**
+    * Checks for correct opponent status for two ninjas, in the three states of rivalry
+    * Three States: Unknown Rivalry, allies, opponents
+    */
   @Test
   def testOpponents() {
     createDatabaseWithNinjas()
     assertEquals(database.opponents(n1Wrap, n2Wrap), None)
-    assertEquals(Some(false), database.opponents(n2Wrap, n2Wrap))
     database.oppose(n1Wrap, n2Wrap)
+    assertEquals(Some(false), database.opponents(n2Wrap, n2Wrap))
     assertEquals(Some(true),database.opponents(n1Wrap, n2Wrap))
   }
 
+  /**
+    * Adds the fact that two Ninjas are opponents, and verifies this fact against the database
+    */
   @Test
   def testOppose(): Unit = {
     createDatabaseWithNinjas()
+    assertEquals(None,database.opponents(n1Wrap, n2Wrap))
     database.oppose(n1Wrap, n2Wrap)
     assertEquals(Some(true),database.opponents(n1Wrap, n2Wrap))
     try {
