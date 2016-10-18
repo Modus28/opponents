@@ -6,28 +6,21 @@
 	<target name="init">
 
 		<!-- Properties -->
-		<property name="sources.dir" value="src" />
-		<property name="scala-test.dir" value="test" />
-		<property name="build.dir" value="classes" />
-		<property name="build-classes.dir" location="${build.dir}/classes"/>
+
 		<property environment="env" />
-		<property name="scala.home" value="${env.SCALA_HOME}" />
 		<property name="ant.home" value = "${env.ANT_HOME}" />
 		<property name="src.dir" location="${basedir}/src"/>
 		<property name="lib.dir" location="${basedir}/lib"/>
-		<property name="build-lib.dir" location="${build.dir}/lib"/>
-		<property name="build-doc.dir" location="${build.dir}/doc"/>
 		<property name="java.dir" location="${env.JAVA_HOME}"/>
 		<property name="scala.dir" location="${env.SCALA_HOME}"/>
-		<property name="scala-source.dir" value="src" />
 		<property name="scala-library.jar" location="${scala.dir}/lib/scala-library.jar"/>
 		<property name="scala-reflect.jar" location="${scala.dir}/lib/scala-reflect.jar"/>
 		<property name="scala-compiler.jar" location="${scala.dir}/lib/scala-compiler.jar"/>
-		<property name="scala-xml.jar" location="${scala.dir}/lib/scala-xml_2.11-1.0.4.jar"/>
+		<property name="build.dir" value="classes" />
+		<property name="build-classes.dir" location="${build.dir}/classes"/>
 		<property name="report.dir" value="report"/>
 		<property name="junit.dir" value="${report.dir}/junit"/>
 		<property name="doc.dir" value="doc"/>
-		<property name="scala-library.jar" value="${scala.home}/lib/scala-library.jar" />
 
 		<!-- Paths -->
 		<path id="dyna.jars">
@@ -45,16 +38,16 @@
 		<path id="hamcrest.classpath">
 			<pathelement location="${ant.home}/lib/hamcrest-core-1.3.jar"/>
 		</path>
-		
+
 		<!--< Taskdefs />-->
 		<taskdef resource="scala/tools/ant/antlib.xml">
 			<classpath>
-				<pathelement location="${scala.home}/lib/scala-compiler.jar"   />
-				<pathelement location="${scala.home}/lib/scala-reflect.jar"   />
+				<pathelement location="${scala.dir}/lib/scala-compiler.jar"   />
+				<pathelement location="${scala.dir}/lib/scala-reflect.jar"   />
 				<pathelement location="${scala-library.jar}"   />
 			</classpath>
 		</taskdef>
-		
+
 		<!-- Confirm the server's environment variables  -->
 		<echo message=" Initialize Project..."/>
 		<echo message=" with scala.dir = ${env.SCALA_HOME}"/>
@@ -94,5 +87,5 @@
 			<report todir="${junit.dir}"/>
 		</junitreport>
 	</target>
-	
+
 </project>
