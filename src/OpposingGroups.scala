@@ -1,5 +1,4 @@
 import scala.collection.mutable
-import scala.util.{Failure, Success, Try}
 
 /** EECS 293: Opposing Groups
   * Daniel Grigsby

@@ -1,7 +1,6 @@
 import org.junit.Test
-import scala.util.{Failure, Success, Try}
-import junit.framework.TestCase
 import org.junit.Assert._
+
 /**
   * EECS 293
   * Created by Daniel on 10/16/2016.
