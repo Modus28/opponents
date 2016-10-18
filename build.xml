@@ -61,7 +61,7 @@
 		<scalac
 			destdir="${build.dir}"
 			classpath="${ant.home}/lib/"
-			classpathref="project.classpath">
+			classpathref="dyna.jars">
 			<include name="*.scala"/>
 			<src>
 				<pathelement location="${src.dir}"/>
