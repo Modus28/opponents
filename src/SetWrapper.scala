@@ -10,7 +10,7 @@ class SetWrapper[N]  {
 
   // Fields
 
-  var objects: Set[ObjectWrapper[N]] = _
+  var objects: Set[ObjectWrapper[N]] = Set[ObjectWrapper[N]]()
   var pair: Pair[N] = _
 
   // Methods
@@ -36,7 +36,10 @@ class SetWrapper[N]  {
       for (objWrapper <- toAppend.getObjects) {
         objWrapper.setContainer(this)
       }
-      setObjects(objects ++ toAppend)
+      setObjects(objects ++ toAppend.getObjects)
+    }
+    else{
+      // We append nothing
     }
   }
 
@@ -68,21 +71,16 @@ class SetWrapper[N]  {
     */
   def this(objects: Set[ObjectWrapper[N]]) = {
     this
-    if(Option(objects).isDefined) {
+    if(Option(objects).isDefined && objects.nonEmpty) {
       for (objWrapper <- objects) {
         objWrapper.setContainer(this)
       }
       setObjects(objects)
     }
+    else {
+      setObjects(Set[ObjectWrapper[N]](null))
+    }
   }
 
-  // Implicit Definitions
-
-  /** Set operations, such as contains, will be delegated to 'objects'
-    *
-    * @param d the SetWrapper to delegate from
-    * @return the set contained in the SetWrapper
-    */
-  implicit def delegateToSet(d: SetWrapper[N]): Set[ObjectWrapper[N]] = d.getObjects
 
 }

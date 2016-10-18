@@ -46,5 +46,4 @@ class ObjectWrapper[N](value: N) {
     */
   def setContainer(s: SetWrapper[N]): Unit = this.container = s
 
-
 }

@@ -13,7 +13,7 @@ class OpposingGroups[N] {
 
   // Fields
 
-  val opposingGroups: mutable.HashSet[Pair[N]] = new mutable.HashSet[Pair[N]]()
+  val opposingDatabase: mutable.HashSet[Pair[N]] = new mutable.HashSet[Pair[N]]()
 
   // Methods
 
@@ -25,8 +25,10 @@ class OpposingGroups[N] {
   def create(x: N): ObjectWrapper[N] = {
     val wrapper: ObjectWrapper[N] = new ObjectWrapper[N](x)
     val set: SetWrapper[N] = new SetWrapper[N](Set(wrapper))
-    val newPair: Pair[N] = new Pair(set, new SetWrapper[N]())
+    val emptySet: SetWrapper[N] = new SetWrapper[N]()
+    val newPair: Pair[N] = new Pair(set, emptySet)
     set.setContainer(newPair)
+    emptySet.setContainer(newPair)
     addPair(newPair)
     wrapper
   }
@@ -35,7 +37,7 @@ class OpposingGroups[N] {
     *
     * @param toAdd the pair to add to the database
     */
-  def addPair(toAdd: Pair[N]): Unit = opposingGroups += toAdd
+  def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
 
   /** Oppose: Updates the database with a new Opposition
     * O(n) worst case, O(1) average case
@@ -62,8 +64,8 @@ class OpposingGroups[N] {
     * @param ys The set in yp that will be added inside xs
     */
   def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
-    xp.getOpponentSet(xs).appendSet(ys.getOpponents)
-    xs.appendSet(ys)
+    xp.getOpponentSet(xs).appendSet(ys)
+    xs.appendSet(ys.getOpponents)
     removePair(Set(yp))
   }
 
@@ -71,7 +73,7 @@ class OpposingGroups[N] {
     *
     * @param toDel the pairs to remove from the database
     */
-  def removePair(toDel: Set[Pair[N]]): Unit = opposingGroups --= toDel
+  def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
 
   /** Check if ObjectWrappers are Opponents - O(1)
     *
@@ -82,10 +84,10 @@ class OpposingGroups[N] {
   def opponents(x: ObjectWrapper[N], y: ObjectWrapper[N]): Option[Boolean] = {
     if (x.getPair equals y.getPair) {
       if (x.getContainer equals y.getContainer) {
-        Option(true)
+        Option(false)
       }
       else {
-        Option(false)
+        Option(true)
       }
     }
     else {
@@ -93,9 +95,13 @@ class OpposingGroups[N] {
     }
   }
 
+  /** Return the oppose HashSet
+    *
+    * @return the opposing group hashset for this object
+    */
+  def getOpposingDatabase: mutable.HashSet[Pair[N]] = this.opposingDatabase
 
   def main(args: Array[String]): Unit = {
     println("We are compiling")
-
   }
 }

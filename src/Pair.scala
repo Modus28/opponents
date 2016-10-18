@@ -20,7 +20,6 @@ class Pair[N](primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
       primarySet
     }
     else {
-      println(s" x: + $x not equal to $primarySet or $secondarySet")
       throw new IllegalArgumentException("You tried to get the opponent set for an Set that is not in this Pair")
     }
   }
