@@ -88,4 +88,6 @@
 		</junitreport>
 	</target>
 
+	<!-- Asked for by the server, not listed as required in HW7.pdf -->
+	<target name="compile" depends="build">	</target>
 </project>
