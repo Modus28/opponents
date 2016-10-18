@@ -61,6 +61,7 @@ class OpponentsTest {
     assertEquals(Some(true),database.opponents(n1Wrap, n2Wrap))
     try {
       database.oppose(n1Wrap, n2Wrap)
+      assert(false) // Exception should be thrown before this would occur
     } catch {
       case i: IllegalArgumentException => assert(true)
       case e: Exception => assert(false)

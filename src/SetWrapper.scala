@@ -1,4 +1,3 @@
-import scala.language.implicitConversions
 /**
   * EECS 293
   * Created by Daniel on 10/16/2016.
@@ -6,12 +5,12 @@ import scala.language.implicitConversions
   *
   * SetWrapper:  Contains a Set of ObjectWrappers that are not opponents of each other
   */
-class SetWrapper[N]  {
+class SetWrapper[N] {
 
   // Fields
 
-  var objects: Set[ObjectWrapper[N]] = Set[ObjectWrapper[N]]()
-  var pair: Pair[N] = _
+  private var objects: Set[ObjectWrapper[N]] = Set[ObjectWrapper[N]]()
+  private var pair: Pair[N] = _
 
   // Methods
 
@@ -27,60 +26,58 @@ class SetWrapper[N]  {
     */
   def getPair: Pair[N] = this.pair
 
-  /** Append a set to this SetWrapper's contained set
+  /**
+    * Set the pair containing this to the input
     *
-    * @param toAppend the set to add to our contained set
+    * @param pair the pair to update the pair field to
     */
-  def appendSet(toAppend: SetWrapper[N]): Unit = {
-    if (Option(toAppend.getObjects).isDefined) {
-      for (objWrapper <- toAppend.getObjects) {
-        objWrapper.setContainer(this)
-      }
-      setObjects(objects ++ toAppend.getObjects)
-    }
-    else{
-      // We append nothing
-    }
-  }
+  def setPair(pair: Pair[N]): Unit = this.pair = pair
 
-  /** Return the set of ObjectWrappers inside this
+  /**
+    * Return the set of ObjectWrappers inside this
     *
     * @return set of ObjectWrappers this contains
     */
   def getObjects: Set[ObjectWrapper[N]] = this.objects
 
-  /** Set the pair containing this to the input
+  /**
+    * Set the container pointer for a set of objects to this
     *
-    * @param pair the pair to update the pair field to
+    * @param objects objects to set container pointer for
     */
-  def setContainer(pair: Pair[N]): Unit = this.pair = pair
+  private def setContainers(objects: Set[ObjectWrapper[N]]): Unit = objects foreach (_.setContainer(this))
 
-
-  /** Set the set of ObjectWrappers to the input
+  /**
+    * Set the set of ObjectWrappers to the input
     *
     * @param obj the set of ObjectWrappers to set
     */
-  def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
+  private def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
+
+
+  /** Append a set to this SetWrapper's contained set
+    *
+    * @param toAppend the set to add to our contained set
+    */
+  def appendSet(toAppend: Set[ObjectWrapper[N]]): Unit = {
+    setObjects(objects ++ toAppend)
+    setContainers(toAppend)
+  }
 
   //  Constructors
 
   /** Set each ObjectWrapper's container field to input
     * And initialize a SetWrapper
     *
-    * @param objects the objects to insert into this
+    * @param objectList the objects to insert into this
     */
-  def this(objects: Set[ObjectWrapper[N]]) = {
+  def this(objectList: Set[ObjectWrapper[N]]) = {
     this
-    if(Option(objects).isDefined && objects.nonEmpty) {
-      for (objWrapper <- objects) {
-        objWrapper.setContainer(this)
-      }
-      setObjects(objects)
+    if (Option(objectList).isDefined) {
+      appendSet(objectList)
     }
     else {
       setObjects(Set[ObjectWrapper[N]](null))
     }
   }
-
-
 }

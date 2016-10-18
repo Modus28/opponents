@@ -6,8 +6,9 @@
   * Object Wrapper: Adds functionality to the generic type N
   */
 class ObjectWrapper[N](value: N) {
+
   // Fields
-  var container: SetWrapper[N] = _ // The SetWrapper that holds this ObjectWrapper
+  private var container: SetWrapper[N] = _ // The SetWrapper that holds this ObjectWrapper
 
   // Methods
 

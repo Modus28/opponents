@@ -3,6 +3,7 @@ import scala.collection.mutable
 /** EECS 293: Opposing Groups
   * Daniel Grigsby
   * October 11, 2016
+  *
   * OpposingGroups is a data storage system that keeps track of what objects are the opponents
   * of other objects, and groups them to maximize our knowledge of that. Performs similarly to a
   * Set of HashSets, where the total number of HashSets is minimized by merging when possible
@@ -12,12 +13,13 @@ import scala.collection.mutable
 class OpposingGroups[N] {
 
   // Fields
-
-  val opposingDatabase: mutable.HashSet[Pair[N]] = new mutable.HashSet[Pair[N]]()
+  // The Database: A HashSet of Pairs
+  private val opposingDatabase: mutable.HashSet[Pair[N]] = new mutable.HashSet[Pair[N]]()
 
   // Methods
 
   /** Create: Add x to the database inside a new Group - O(1)
+    *
     *
     * @param x the object to add to the known objects list
     * @return the ObjectWrapper containing the input, x
@@ -27,8 +29,8 @@ class OpposingGroups[N] {
     val set: SetWrapper[N] = new SetWrapper[N](Set(wrapper))
     val emptySet: SetWrapper[N] = new SetWrapper[N]()
     val newPair: Pair[N] = new Pair(set, emptySet)
-    set.setContainer(newPair)
-    emptySet.setContainer(newPair)
+    set.setPair(newPair)
+    emptySet.setPair(newPair)
     addPair(newPair)
     wrapper
   }
@@ -37,7 +39,7 @@ class OpposingGroups[N] {
     *
     * @param toAdd the pair to add to the database
     */
-  def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
+  private def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
 
   /** Oppose: Updates the database with a new Opposition
     * O(n) worst case, O(1) average case
@@ -50,7 +52,7 @@ class OpposingGroups[N] {
       merge(x.getPair, x.getContainer, y.getPair, y.getContainer)
     }
     else {
-      throw new IllegalArgumentException
+      throw new IllegalArgumentException("X and Y already have known opponents status")
     }
   }
 
@@ -63,9 +65,9 @@ class OpposingGroups[N] {
     * @param yp The pair to be merged into xp
     * @param ys The set in yp that will be added inside xs
     */
-  def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
-    xp.getOpponentSet(xs).appendSet(ys)
-    xs.appendSet(ys.getOpponents)
+  private def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
+    xp.getOpponentSet(xs).appendSet(ys.getObjects)
+    xs.appendSet(ys.getOpponents.getObjects)
     removePair(Set(yp))
   }
 
@@ -73,7 +75,7 @@ class OpposingGroups[N] {
     *
     * @param toDel the pairs to remove from the database
     */
-  def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
+  private def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
 
   /** Check if ObjectWrappers are Opponents - O(1)
     *
@@ -100,8 +102,4 @@ class OpposingGroups[N] {
     * @return the opposing group hashset for this object
     */
   def getOpposingDatabase: mutable.HashSet[Pair[N]] = this.opposingDatabase
-
-  def main(args: Array[String]): Unit = {
-    println("We are compiling")
-  }
 }
