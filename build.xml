@@ -6,7 +6,6 @@
 	<target name="init">
 
 		<!-- Properties -->
-
 		<property environment="env" />
 		<property name="ant.home" value = "${env.ANT_HOME}" />
 		<property name="src.dir" location="${basedir}/src"/>
