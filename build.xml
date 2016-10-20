@@ -1,7 +1,7 @@
 <!-- EECS 293: Fall 2016: HW7 Ant Build file -->
 <!-- Daniel Grigsby -->
 
-<project name="opponents" default="compile" basedir=".">
+<project name="opponents" default="compile" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 	<!-- Init Target: Sets up global variables -->
 	<target name="init">
 
@@ -20,6 +20,9 @@
 		<property name="report.dir" value="report"/>
 		<property name="junit.dir" value="${report.dir}/junit"/>
 		<property name="doc.dir" value="doc"/>
+		<!-- Jacoco -->
+		<property name="jacoco.dir" value="${report.dir}/jacoco"/>
+		<property name="jacoco.file" value="${jacoco.dir}/jacoco.exec"/>
 
 		<!-- Paths -->
 		<path id="dyna.jars">
@@ -73,6 +76,7 @@
 	<target name="test" depends="build">
 		<mkdir dir="${report.dir}"/>
 		<mkdir dir="${junit.dir}"/>
+		 <jacoco:coverage destfile="${jacoco.file}">
 		<junit fork="yes" includeAntRuntime="yes" printsummary="withOutAndErr">
 			<formatter type="xml"/>
 			<batchtest fork="yes" filtertrace="off" todir="${junit.dir}">
@@ -81,10 +85,29 @@
 			<classpath refid="dyna.jars"/>
 			<classpath path="${build.dir}"/>
 		</junit>
+		</jacoco:coverage>
+		
 		<junitreport todir="${junit.dir}">
 			<fileset dir="${junit.dir}" includes="TEST-*.xml"/>
 			<report todir="${junit.dir}"/>
 		</junitreport>
+		<jacoco:report>                        
+      <executiondata>
+        <file file="${jacoco.file}"/>
+      </executiondata>
+                            
+      <structure name="${ant.project.name}">
+        <classfiles>
+          <fileset dir="${build.dir}"/>
+        </classfiles>
+        <sourcefiles>
+          <fileset dir="${src.dir}"/>
+        </sourcefiles>
+      </structure>
+                            
+      <html destdir="${jacoco.dir}"/>
+    </jacoco:report>
+		
 	</target>
 
 	<!-- Asked for by the server, not listed as required in HW7.pdf -->
