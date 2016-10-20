@@ -1,6 +1,7 @@
 
 import org.junit.Test
 import org.junit.Assert._
+import org.junit.Before
 
 /**
   * EECS 293
@@ -17,6 +18,7 @@ class OpponentsTest {
   var n2Wrap: ObjectWrapper[Ninja] = _
 
   // Helper Method: Initialize Global values for tests
+  @Before
   def createDatabaseWithNinjas(): Unit = {
     database = new OpposingGroups[Ninja]()
     n1 = new Ninja()
@@ -32,7 +34,6 @@ class OpponentsTest {
     */
   @Test
   def testCreate(): Unit = {
-    createDatabaseWithNinjas()
     assert(database.getOpposingDatabase.nonEmpty)
     assert(database.getOpposingDatabase.size.equals(2))
   }
@@ -43,7 +44,6 @@ class OpponentsTest {
     */
   @Test
   def testOpponents() {
-    createDatabaseWithNinjas()
     assertEquals(database.opponents(n1Wrap, n2Wrap), None)
     database.oppose(n1Wrap, n2Wrap)
     assertEquals(Some(false), database.opponents(n2Wrap, n2Wrap))
@@ -55,7 +55,6 @@ class OpponentsTest {
     */
   @Test
   def testOppose(): Unit = {
-    createDatabaseWithNinjas()
     assertEquals(None,database.opponents(n1Wrap, n2Wrap))
     database.oppose(n1Wrap, n2Wrap)
     assertEquals(Some(true),database.opponents(n1Wrap, n2Wrap))
