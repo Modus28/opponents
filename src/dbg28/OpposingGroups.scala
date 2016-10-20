@@ -1,3 +1,5 @@
+package dbg28
+
 import scala.collection.mutable
 
 /** EECS 293: Opposing Groups
@@ -65,7 +67,7 @@ class OpposingGroups[N] {
     * @param yp The pair to be merged into xp
     * @param ys The set in yp that will be added inside xs
     */
-  private def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
+  private[dbg28] def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
     xp.getOpponentSet(xs).appendSet(ys.getObjects)
     xs.appendSet(ys.getOpponents.getObjects)
     removePair(Set(yp))

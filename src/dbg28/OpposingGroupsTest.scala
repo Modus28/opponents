@@ -1,3 +1,5 @@
+package dbg28
+
 import org.junit.Assert._
 import org.junit.{Before, Test}
 
