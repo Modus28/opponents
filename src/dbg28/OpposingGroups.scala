@@ -41,7 +41,7 @@ class OpposingGroups[N] {
     *
     * @param toAdd the pair to add to the database
     */
-  private def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
+  private[dbg28] def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
 
   /** Oppose: Updates the database with a new Opposition
     * O(n) worst case, O(1) average case
@@ -77,7 +77,7 @@ class OpposingGroups[N] {
     *
     * @param toDel the pairs to remove from the database
     */
-  private def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
+  private[dbg28] def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
 
   /** Check if ObjectWrappers are Opponents - O(1)
     *
