@@ -65,7 +65,7 @@
 			classpathref="dyna.jars">
 			<include name="*.scala"/>
 			<src>
-				<pathelement location="${src.dir}"/>
+				<pathelement location="${src.dir}/dbg28"/>
 			</src>
 		</scalac>
 	</target>
@@ -75,6 +75,7 @@
 	<target name="test" depends="build">
 		<mkdir dir="${report.dir}"/>
 		<mkdir dir="${junit.dir}"/>
+		<mkdir dir="${jacoco.dir}"/>
 		<jacoco:coverage destfile="${jacoco.file}">
 			<junit fork="yes" includeAntRuntime="yes" printsummary="withOutAndErr">
 				<formatter type="xml"/>
@@ -102,7 +103,7 @@
 					<fileset dir="${build.dir}"/>
 				</classfiles>
 				<sourcefiles>
-					<fileset dir="${src.dir}"/>
+					<fileset dir="${src.dir}/dbg28"/>
 				</sourcefiles>
 			</structure>
 			<html destdir="${jacoco.dir}"/>
