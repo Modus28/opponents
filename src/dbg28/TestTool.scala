@@ -41,6 +41,7 @@ class TestTool {
     // Initialize a Set of 10 Ninjas and their set of ObjectWrappers
     ninjaSetOfTen = Set.empty[Ninja]
     1 to 10 foreach { _ => ninjaSetOfTen + new Ninja() }
+    objectWrapperSetOfTen = Set.empty[ObjectWrapper[Ninja]]
     ninjaSetOfTen foreach {objectWrapperSetOfTen + bigDatabase.create(_)}
     // Initialize four SetWrappers
     setWrapperFirst = new SetWrapper[Ninja]()

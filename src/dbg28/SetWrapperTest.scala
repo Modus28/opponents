@@ -24,33 +24,78 @@ class SetWrapperTest {
 
   /** Tests setContainer
     *
-    * Satisfies: Dataflow, Bad Data, Good Data, Nominal case
-    * N/A: Branching, Boundary, Compound Boundary,
+    * Bad Data: Null Input
     */
   @Test
   def testSetContainers(): Unit = {
-    tester = new TestTool().createDatabaseWithNinjas()
-
     try{
-      tester.n1Wrap.getContainer
+      tester.setWrapperFirst.setContainers(Set(null))
     } catch{
       case n: NullPointerException => assert(true)
       case e: Exception => assert(false)
     }
+  }
 
+  /** Tests setContainer
+    *
+    * Good Data & Nominal case: Set of Objects
+    */
+  @Test
+  def testSetContainerGoodData(): Unit = {
     tester.setWrapperFirst.setContainers(Set(tester.n1Wrap))
     assertEquals(tester.setWrapperFirst, tester.n1Wrap.getContainer)
   }
 
 
-  /** Tests getOpponents, as is not an standard getter
+  /** Tests getOpponents
     *
-    * Satisfies: Dataflow
-    * N/A: Branching, Boundary, Compound Boundary,
-    * N/A: Bad Data, Good Data, Boundary Analysis
+    * Good data, nominal case
     */
   @Test
-  def testGetOpponents(): Unit = {
-    assert(tester.setWrapperFirst.getOpponents.equals(tester.setWrapperSecond))
+  def testGetOpponentsGoodData(): Unit = {
+    assertEquals(tester.setWrapperFirst.getOpponents, tester.setWrapperSecond)
+  }
+
+  /** Tests getOpponents
+    *
+    * Bad Data
+    */
+  @Test
+  def testGetOpponentsBadData(): Unit = {
+    val badSetWrapper = new SetWrapper[Ninja]()
+    try{
+      badSetWrapper.getOpponents
+    } catch{
+      case n: NullPointerException => assert(true)
+      case e: Exception => assert(false)
+    }
+  }
+
+
+
+  /** Tests appendSet
+    *
+    * Bad Data
+    *
+    */
+  @Test
+  def testAppendSetBadData(): Unit = {
+    try {
+      tester.setWrapperFirst.appendSet(null)
+    } catch{
+      case n: NullPointerException => assert(true)
+      case e: Exception => println(e.printStackTrace())
+    }
+  }
+
+  /** Tests appendSet
+    *
+    * Good Data
+    *
+    */
+  @Test
+  def testAppendSetGoodData(): Unit = {
+    tester.setWrapperFirst.appendSet(tester.objectWrapperSetOfTen)
+    assert(tester.objectWrapperSetOfTen.forall(_.getContainer.equals(tester.setWrapperFirst)))
   }
 }

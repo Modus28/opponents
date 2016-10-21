@@ -62,7 +62,7 @@ class SetWrapper[N] {
     * @param toAppend the set to add to our contained set
     */
   def appendSet(toAppend: Set[ObjectWrapper[N]]): Unit = {
-    setObjects(objects ++ toAppend)
+    setObjects(toAppend ++ objects)
     setContainers(toAppend)
   }
 
@@ -79,7 +79,7 @@ class SetWrapper[N] {
       appendSet(objectList)
     }
     else {
-      setObjects(Set[ObjectWrapper[N]](null))
+      // Do nothing, no modification needed
     }
   }
 }
