@@ -22,7 +22,11 @@
 		<property name="doc.dir" value="doc"/>
 		<property name="jacoco.dir" value="${report.dir}/jacoco"/>
 		<property name="jacoco.file" value="${jacoco.dir}/jacoco.exec"/>
-
+		<!-- check if any files has been modified since last build -->
+		<uptodate property="build.uptodate" targetfile="${build.dir}/build.done">
+			<srcfiles dir= "${src.dir}" includes="**"/>
+			<srcfiles dir= "${lib.dir}" includes="**"/>
+		</uptodate>
 		<!-- Paths -->
 		<path id="dyna.jars">
 			<fileset dir="${scala.dir}/lib">
@@ -60,7 +64,7 @@
 	<target name="build" depends="init">		
 		<mkdir dir="${build.dir}"/>
 		<scalac
-			destdir="${build.dir}"
+			destdir="${build.dir}/dbg28"
 			classpath="${ant.home}/lib/"
 			classpathref="dyna.jars">
 			<include name="*.scala"/>
@@ -72,7 +76,7 @@
 
 
 	<!-- Test Target: Runs Junit tests -->
-	<target name="test" depends="build">
+	<target name="test" depends="build" unless="build.uptodate">
 		<mkdir dir="${report.dir}"/>
 		<mkdir dir="${junit.dir}"/>
 		<mkdir dir="${jacoco.dir}"/>
