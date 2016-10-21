@@ -31,7 +31,7 @@ class SetWrapperTest {
     */
   @Test
   def testGetOpponents(): Unit = {
-    val database = new OpposingGroups[Ninja]()
+
 
   }
 }
