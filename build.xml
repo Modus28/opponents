@@ -63,13 +63,14 @@
 	<!-- Build Target: Compiles Code -->
 	<target name="build" depends="init">		
 		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}/dbg28"/>
 		<scalac
 			destdir="${build.dir}"
 			classpath="${ant.home}/lib/"
 			classpathref="dyna.jars">
 			<include name="*.scala"/>
 			<src>
-				<pathelement location="${src.dir}"/>
+				<pathelement location="${src.dir}/dbg28"/>
 			</src>
 		</scalac>
 	</target>
