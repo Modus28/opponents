@@ -64,12 +64,12 @@
 	<target name="build" depends="init">		
 		<mkdir dir="${build.dir}"/>
 		<scalac
-			destdir="${build.dir}/dbg28"
+			destdir="${build.dir}"
 			classpath="${ant.home}/lib/"
 			classpathref="dyna.jars">
 			<include name="*.scala"/>
 			<src>
-				<pathelement location="${src.dir}/dbg28"/>
+				<pathelement location="${src.dir}"/>
 			</src>
 		</scalac>
 	</target>
@@ -104,7 +104,7 @@
 			</executiondata>
 			<structure name="${ant.project.name}">
 				<classfiles>
-					<fileset dir="${build.dir}"/>
+					<fileset dir="${build.dir}/dbg28"/>
 				</classfiles>
 				<sourcefiles>
 					<fileset dir="${src.dir}/dbg28"/>
