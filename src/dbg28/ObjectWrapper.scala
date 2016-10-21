@@ -10,6 +10,7 @@ package dbg28
 class ObjectWrapper[N](value: N) {
 
   // Fields
+
   private var container: SetWrapper[N] = _ // The SetWrapper that holds this ObjectWrapper
 
   // Methods
@@ -23,7 +24,6 @@ class ObjectWrapper[N](value: N) {
     * @return hashcode of the contained value
     */
   override def hashCode(): Int = this.getValue.hashCode()
-
 
   /** Returns the value contained in this ObjectWrapper
     *
