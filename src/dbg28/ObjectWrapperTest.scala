@@ -14,8 +14,8 @@ class ObjectWrapperTest {
 
   /**
     * Tests the Hashcode delegation for ObjectWrapper to its contained value
-    *  Satisfies: Dataflow
-    *  N/A: Branching, Boundary, Compound Boundary,
+    *  Satisfies: Dataflow, Branching
+    *  N/A: Boundary, Compound Boundary,
     *  N/A: Bad Data, Good Data, Boundary Analysis
     *
     */

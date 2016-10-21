@@ -1,5 +1,6 @@
 package dbg28
 
+
 import org.junit.Assert._
 import org.junit.{Before, Test}
 
@@ -11,25 +12,13 @@ import org.junit.{Before, Test}
 class OpposingGroupsTest {
 
   // Global fields
-
-  var database: OpposingGroups[Ninja] = _
-  var n1: Ninja = _
-  var n2: Ninja = _
-  var n1Wrap: ObjectWrapper[Ninja] = _
-  var n2Wrap: ObjectWrapper[Ninja] = _
-
+  var tester: TestTool = _
   // Test Methods
 
-  /**
-    *  Setup: Initialize a database with two Pairs of single Ninjas
-    */
+
   @Before
-  def createDatabaseWithNinjas(): Unit = {
-    database = new OpposingGroups[Ninja]()
-    n1 = new Ninja()
-    n2 = new Ninja()
-    n1Wrap = database.create(n1)
-    n2Wrap = database.create(n2)
+  def setup(): Unit = {
+    tester = new TestTool().createDatabaseWithNinjas()
   }
 
   /**
@@ -37,8 +26,8 @@ class OpposingGroupsTest {
     */
   @Test
   def testCreate(): Unit = {
-    assert(database.getOpposingDatabase.nonEmpty)
-    assert(database.getOpposingDatabase.size.equals(2))
+    assert(tester.database.getOpposingDatabase.nonEmpty)
+    assert(tester.database.getOpposingDatabase.size.equals(2))
   }
 
   /**
@@ -47,10 +36,10 @@ class OpposingGroupsTest {
     */
   @Test
   def testOpponents() {
-    assertEquals(database.opponents(n1Wrap, n2Wrap), None)
-    database.oppose(n1Wrap, n2Wrap)
-    assertEquals(Some(false), database.opponents(n2Wrap, n2Wrap))
-    assertEquals(Some(true),database.opponents(n1Wrap, n2Wrap))
+    assertEquals(tester.database.opponents(tester.n1Wrap, tester.n2Wrap), None)
+    tester.database.oppose(tester.n1Wrap, tester.n2Wrap)
+    assertEquals(Some(false), tester.database.opponents(tester.n2Wrap, tester.n2Wrap))
+    assertEquals(Some(true),tester.database.opponents(tester.n1Wrap, tester.n2Wrap))
   }
 
   /**
@@ -58,11 +47,11 @@ class OpposingGroupsTest {
     */
   @Test
   def testOppose(): Unit = {
-    assertEquals(None,database.opponents(n1Wrap, n2Wrap))
-    database.oppose(n1Wrap, n2Wrap)
-    assertEquals(Some(true),database.opponents(n1Wrap, n2Wrap))
+    assertEquals(None,tester.database.opponents(tester.n1Wrap, tester.n2Wrap))
+    tester.database.oppose(tester.n1Wrap, tester.n2Wrap)
+    assertEquals(Some(true), tester.database.opponents(tester.n1Wrap, tester.n2Wrap))
     try {
-      database.oppose(n1Wrap, n2Wrap)
+      tester.database.oppose(tester.n1Wrap, tester.n2Wrap)
       assert(false) // Exception should be thrown before this would occur
     } catch {
       case i: IllegalArgumentException => assert(true)
