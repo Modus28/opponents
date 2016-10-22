@@ -87,12 +87,7 @@ class OpposingGroups[N] {
     */
   def opponents(x: ObjectWrapper[N], y: ObjectWrapper[N]): Option[Boolean] = {
     if (x.getPair equals y.getPair) {
-      if (x.getContainer equals y.getContainer) {
-        Option(false)
-      }
-      else {
-        Option(true)
-      }
+      Option(!(x.getContainer equals y.getContainer))
     }
     else {
       None
