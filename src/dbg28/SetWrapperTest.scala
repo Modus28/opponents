@@ -12,14 +12,14 @@ class SetWrapperTest {
 
   // Fields
 
-  var tester: TestTool = _
+  var test: TestTool = _
 
   /** Helper method to setup a database with test data
     *
     */
   @Before
   def createDatabaseWithNinjas(): Unit = {
-    tester = new TestTool().createDatabaseWithNinjas()
+    test = new TestTool().createDatabaseWithNinjas()
   }
 
   /** Tests setContainer
@@ -29,7 +29,7 @@ class SetWrapperTest {
   @Test
   def testSetContainerBadData(): Unit = {
     try{
-      tester.setWrapperFirst.setContainers(Set(null))
+      test.setWrapperFirst.setContainers(Set(null))
     } catch{
       case n: NullPointerException => assert(true)
       case e: Exception => assert(false)
@@ -42,8 +42,8 @@ class SetWrapperTest {
     */
   @Test
   def testSetContainerGoodData(): Unit = {
-    tester.setWrapperFirst.setContainers(Set(tester.n1Wrap))
-    assertEquals(tester.setWrapperFirst, tester.n1Wrap.getContainer)
+    test.setWrapperFirst.setContainers(test.objectWrapperSet)
+    assert(test.objectWrapperSet.forall(_.getContainer equals test.setWrapperFirst))
   }
 
 
@@ -53,7 +53,7 @@ class SetWrapperTest {
     */
   @Test
   def testGetOpponentsGoodData(): Unit = {
-    assertEquals(tester.setWrapperFirst.getOpponents, tester.setWrapperSecond)
+    assertEquals(test.setWrapperFirst.getOpponents, test.setWrapperSecond)
   }
 
   /** Tests getOpponents
@@ -81,7 +81,7 @@ class SetWrapperTest {
   @Test
   def testAppendSetBadData(): Unit = {
     try {
-      tester.setWrapperFirst.appendSet(null)
+      test.setWrapperFirst.appendSet(null)
     } catch{
       case n: NullPointerException => assert(true)
       case e: Exception => println(e.printStackTrace())
@@ -95,7 +95,7 @@ class SetWrapperTest {
     */
   @Test
   def testAppendSetGoodData(): Unit = {
-    tester.setWrapperFirst.appendSet(tester.objectWrapperSet)
-    assert(tester.objectWrapperSet.forall(_.getContainer.equals(tester.setWrapperFirst)))
+    test.setWrapperFirst.appendSet(test.objectWrapperSet)
+    assert(test.objectWrapperSet.forall(_.getContainer.equals(test.setWrapperFirst)))
   }
 }

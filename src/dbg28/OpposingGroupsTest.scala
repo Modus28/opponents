@@ -12,22 +12,19 @@ import org.junit.{Before, Test}
 class OpposingGroupsTest {
 
   // Global fields
-  var tester: TestTool = _
+  var test: TestTool = _
+  var ninja1: ObjectWrapper[Ninja] = _
+  var ninja2: ObjectWrapper[Ninja] = _
   // Test Methods
 
 
   @Before
   def setup(): Unit = {
-    tester = new TestTool().createDatabaseWithNinjas()
+    test = new TestTool().createDatabaseWithNinjas()
+    ninja1 = test.objectWrapperSet.head
+    ninja2 = test.objectWrapperSet.tail.head
   }
 
-  /**
-    * Attempts to create the database and check that values were added to it
-    */
-  @Test
-  def testCreate(): Unit = {
-    assertEquals(12, tester.database.getOpposingDatabase.size)
-  }
 
   /**
     * Checks for correct opponent status for two ninjas, in the three states of rivalry
@@ -35,10 +32,10 @@ class OpposingGroupsTest {
     */
   @Test
   def testOpponents() {
-    assertEquals(tester.database.opponents(tester.n1Wrap, tester.n2Wrap), None)
-    tester.database.oppose(tester.n1Wrap, tester.n2Wrap)
-    assertEquals(Some(false), tester.database.opponents(tester.n2Wrap, tester.n2Wrap))
-    assertEquals(Some(true),tester.database.opponents(tester.n1Wrap, tester.n2Wrap))
+    assertEquals(test.database.opponents(ninja1, ninja2), None)
+    test.database.oppose(ninja1, ninja2)
+    assertEquals(Some(false), test.database.opponents(ninja2, ninja2))
+    assertEquals(Some(true),test.database.opponents(ninja1, ninja2))
   }
 
   /**
@@ -46,11 +43,11 @@ class OpposingGroupsTest {
     */
   @Test
   def testOppose(): Unit = {
-    assertEquals(None,tester.database.opponents(tester.n1Wrap, tester.n2Wrap))
-    tester.database.oppose(tester.n1Wrap, tester.n2Wrap)
-    assertEquals(Some(true), tester.database.opponents(tester.n1Wrap, tester.n2Wrap))
+    assertEquals(None,test.database.opponents(ninja1, ninja2))
+    test.database.oppose(ninja1, ninja2)
+    assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
     try {
-      tester.database.oppose(tester.n1Wrap, tester.n2Wrap)
+      test.database.oppose(ninja1, ninja2)
       assert(false) // Exception should be thrown before this would occur
     } catch {
       case i: IllegalArgumentException => assert(true)

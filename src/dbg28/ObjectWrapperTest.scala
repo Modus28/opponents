@@ -12,7 +12,7 @@ class ObjectWrapperTest {
 
   // Fields
 
-  var tester: TestTool = _
+  var test: TestTool = _
 
 
   /** Helper method to setup a database with test data
@@ -20,7 +20,7 @@ class ObjectWrapperTest {
     */
   @Before
   def createDatabaseWithNinjas(): Unit = {
-    tester = new TestTool().createDatabaseWithNinjas()
+    test = new TestTool().createDatabaseWithNinjas()
   }
 
   /**
@@ -45,8 +45,8 @@ class ObjectWrapperTest {
     */
   @Test
   def testGetPairGoodDataNotNull(): Unit = {
-    tester.setWrapperFirst.appendSet(tester.objectWrapperSet)
-    assertEquals(tester.objectWrapperSet.head.getPair, tester.pairFirst)
+    test.setWrapperFirst.appendSet(test.objectWrapperSet)
+    assertEquals(test.objectWrapperSet.head.getPair, test.pairFirst)
   }
 
   /** Tests getOpponents
@@ -55,9 +55,9 @@ class ObjectWrapperTest {
     */
   @Test
   def testGetPairGoodDataNull(): Unit = {
-    tester.setWrapperFirst.appendSet(tester.objectWrapperSet)
-    tester.setWrapperFirst.setPair(null)
-    assertEquals(null, tester.objectWrapperSet.head.getPair)
+    test.setWrapperFirst.appendSet(test.objectWrapperSet)
+    test.setWrapperFirst.setPair(null)
+    assertEquals(null, test.objectWrapperSet.head.getPair)
   }
 
   /** Tests getOpponents
@@ -67,7 +67,7 @@ class ObjectWrapperTest {
   @Test
   def testGetPairBadData(): Unit = {
     try{
-      tester.objectWrapperSet.head.getContainer.getPair
+      test.objectWrapperSet.head.getContainer.getPair
     } catch{
       case n: NullPointerException => assert(true)
       case e: Exception=> assert(false, println(e))
