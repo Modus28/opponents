@@ -29,7 +29,7 @@ class SetWrapperTest {
     */
   @Test
   def testGetOpponentsGoodData(): Unit = {
-    assertEquals(test.sWrapOne.getOpponents, test.sWapTwo)
+    assertEquals(test.sWrapOne.getOpponents, test.sWrapTwo)
   }
 
   /** Tests getOpponents

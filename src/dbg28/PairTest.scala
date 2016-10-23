@@ -28,7 +28,7 @@ class PairTest {
     */
   @Test
   def testGetOpponentSetOnlyFirstBranch(): Unit = {
-    assertEquals(test.pairFirst.getOpponentSet(test.sWrapOne), test.sWapTwo)
+    assertEquals(test.pairFirst.getOpponentSet(test.sWrapOne), test.sWrapTwo)
   }
 
   /** Tests getOpponentSet
@@ -38,7 +38,7 @@ class PairTest {
     */
   @Test
   def testGetOpponentSetOnlySecondBranch(): Unit = {
-    assertEquals(test.pairFirst.getOpponentSet(test.sWapTwo), test.sWrapOne)
+    assertEquals(test.pairFirst.getOpponentSet(test.sWrapTwo), test.sWrapOne)
   }
 
   /** Tests getOpponentSet
