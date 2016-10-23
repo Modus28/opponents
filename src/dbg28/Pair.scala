@@ -15,10 +15,10 @@ class Pair[N](primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
     * @return the opponents of the input
     */
   def getOpponentSet(x: SetWrapper[N]): SetWrapper[N] = {
-    if (x equals primarySet) {
+    if (primarySet equals x) {
       secondarySet
     }
-    else if (x equals secondarySet) {
+    else if (secondarySet equals x) {
       primarySet
     }
     else {
