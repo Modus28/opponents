@@ -71,4 +71,6 @@ class OpposingGroupsTest {
     test.testHook.removePairTest(Set(test.pairFirst))
     assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
   }
+
+
 }

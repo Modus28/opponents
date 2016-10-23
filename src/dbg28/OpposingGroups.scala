@@ -105,9 +105,9 @@ class OpposingGroups[N] {
     */
   class TestHook {
     // Calls merge
-    def mergeTest(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
+    /*def mergeTest(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
       merge(xp, xs, yp, ys)
-    }
+    }*/
 
     // Calls addPair
     def addPairTest(toAdd: Pair[N]): Unit = {
