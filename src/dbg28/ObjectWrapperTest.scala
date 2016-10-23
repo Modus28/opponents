@@ -23,7 +23,8 @@ class ObjectWrapperTest {
 
   /** Tests hashCode
     * Delegation: Doesn't really need to be tested
-    *
+    * Nominal case: value is initialized (it always is)
+    * Dataflow: Value Defined-Used
     */
   @Test
   def hashCodeOverrideTest(): Unit = {
@@ -33,7 +34,8 @@ class ObjectWrapperTest {
 
   /** Tests getPair
     *
-    * Good data, nominal case,
+    * Good data, Input is a Set of ObjectWrappers
+    * Nominal Min case: A set of size 1
     * Dataflow: Container & Pair Defined-Used
     */
   @Test
@@ -42,9 +44,10 @@ class ObjectWrapperTest {
     assertEquals(test.objectWrapperSet.head.getPair, test.pairFirst)
   }
 
-  /** Tests getOpponents
+  /** Tests getPair
     *
-    * Good data
+    * Good data: Input is a Set of ObjectWrappers
+    * Nominal Max case: Set of size 10
     * Dataflow: Pair Killed-Used
     */
   @Test
@@ -54,9 +57,8 @@ class ObjectWrapperTest {
     assertEquals(null, test.objectWrapperSet.head.getPair)
   }
 
-  /** Tests getOpponents
+  /** Tests getPair
     *
-    * Bad data
     * Dataflow: Container Used-Defined
     */
   @Test

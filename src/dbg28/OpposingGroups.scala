@@ -27,14 +27,19 @@ class OpposingGroups[N] {
     * @return the ObjectWrapper containing the input, x
     */
   def create(x: N): ObjectWrapper[N] = {
-    val wrapper: ObjectWrapper[N] = new ObjectWrapper[N](x)
-    val set: SetWrapper[N] = new SetWrapper[N](Set(wrapper))
-    val emptySet: SetWrapper[N] = new SetWrapper[N](null)
-    val newPair: Pair[N] = new Pair(set, emptySet)
-    set.setPair(newPair)
-    emptySet.setPair(newPair)
-    addPair(newPair)
-    wrapper
+    if(Option(x).isDefined) {
+      val wrapper: ObjectWrapper[N] = new ObjectWrapper[N](x)
+      val set: SetWrapper[N] = new SetWrapper[N](Set(wrapper))
+      val emptySet: SetWrapper[N] = new SetWrapper[N](null)
+      val newPair: Pair[N] = new Pair(set, emptySet)
+      set.setPair(newPair)
+      emptySet.setPair(newPair)
+      addPair(newPair)
+      wrapper
+    }
+    else{
+      throw new IllegalArgumentException("Input is null")
+    }
   }
 
   /** Add Pair to Database - O(1)

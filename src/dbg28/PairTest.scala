@@ -46,7 +46,6 @@ class PairTest {
   /** Tests getOpponentSet
     *
     * Bad data: SetWrapper object not in the Pair as input
-    * Branching: Both conditions are false
     * Dataflow: Both conditions are false
     */
   @Test
@@ -62,6 +61,7 @@ class PairTest {
 
   /** Tests getOpponentSet
     *
+    * Bad Data: Malformed Pair with same primary and secondary SetWrappers
     * Dataflow: Both conditions are true
     */
   @Test
@@ -72,6 +72,7 @@ class PairTest {
 
   /** Tests getOpponentSet
     *
+    * Branching: Third branch used
     * Bad data: No input
     */
   @Test

@@ -24,7 +24,8 @@ class SetWrapperTest {
 
   /** Tests getOpponents
     *
-    * Nominal case, Good Data: SetWrapper has opponents
+    * Nominal case SetWrapper has opponents
+    * Dataflow: Pair Defined-Used
     *
     */
   @Test
@@ -34,7 +35,7 @@ class SetWrapperTest {
 
   /** Tests getOpponents
     *
-    * Bad Data: No Opponents
+    * Dataflow: opponents Used-Defined
     */
   @Test
   def testGetOpponentsBadData(): Unit = {
