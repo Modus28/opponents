@@ -120,9 +120,9 @@ class OpposingGroups[N] {
     }
   }
 
-  // Companion Object for TestHook to easily instantiate it
+  /*// Companion Object for TestHook to easily instantiate it
   object TestHook {
     def apply() = new TestHook()
-  }
+  }*/
 
 }

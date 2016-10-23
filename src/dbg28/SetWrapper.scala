@@ -57,7 +57,7 @@ class SetWrapper[N] private () {
     */
   def appendSet(toAppend: Set[ObjectWrapper[N]]): Unit = {
     setObjects(toAppend ++ objects)
-    toAppend foreach (_.setContainer(this))
+    toAppend.foreach(_.setContainer(this))
   }
 
   //  Constructors

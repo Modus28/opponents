@@ -31,9 +31,11 @@ class TestTool {
     *  Setup: Initialize a database with two Pairs of single Ninjas
     */
   def createDatabaseWithNinjas(): TestTool = {
-    // Start new Database
-    database = new OpposingGroups[Ninja]()
-    testHook = database.TestHook()
+    // Start new Database. Double variable declaration is necessary for stable outer-inner class identifier
+    val data = new OpposingGroups[Ninja]()
+    val tester = new data.TestHook()
+    database = data
+    testHook = tester
     initializeSets()
     initializeSetWrappers()
     initializePairs()

@@ -67,6 +67,8 @@ class SetWrapperTest {
   def testAppendSetGoodData(): Unit = {
     test.setWrapperFirst.appendSet(test.objectWrapperSet)
     assert(test.objectWrapperSet.forall(_.getContainer.equals(test.setWrapperFirst)))
+    //test.setWrapperFirst.appendSet(Set()) // Tried both of these but they don't satisfy Jacoco's missed branch
+    //test.setWrapperFirst.appendSet(Set(test.objectWrapperSet.head)) 
   }
 
 
