@@ -15,7 +15,7 @@ class TestTool {
   var database: OpposingGroups[Ninja] = _
   var ninjaSet: Set[Ninja] = _
   var objectWrapperSet: Set[ObjectWrapper[Ninja]] = _
-  var sWrapOne, sWapTwo, sWrapThree, sWrapFour: SetWrapper[Ninja] = new SetWrapper[Ninja](null)
+  var sWrapOne, sWrapTwo, sWrapThree, sWrapFour: SetWrapper[Ninja] = new SetWrapper[Ninja](null)
   var pairFirst, pairSecond: Pair[Ninja] = _
   var testHook: OpposingGroups[Ninja]#TestHook = _
 
@@ -37,14 +37,13 @@ class TestTool {
   // Initialize a Set of 10 Ninjas and their set of ObjectWrappers
   def initializeSets(): Unit = {
     ninjaSet = (1 to 10).map(_ => new Ninja()).toSet
-    objectWrapperSet = ninjaSet.map(database.create(_))
+    objectWrapperSet = ninjaSet.map(new ObjectWrapper[Ninja](_))
   }
-
 
   // Initialize two Pairs
   def initializePairs(): Unit = {
-    pairFirst = new Pair[Ninja](sWrapOne, sWapTwo)
-    List(sWrapOne, sWapTwo).foreach(_.setPair(pairFirst))
+    pairFirst = new Pair[Ninja](sWrapOne, sWrapTwo)
+    List(sWrapOne, sWrapTwo).foreach(_.setPair(pairFirst))
     pairSecond = new Pair[Ninja](sWrapThree, sWrapFour)
     List(sWrapThree, sWrapFour).foreach(_.setPair(pairSecond))
     database.getOpposingDatabase += (pairFirst, pairSecond)
