@@ -32,26 +32,31 @@ class TestTool {
   def createDatabaseWithNinjas(): TestTool = {
     // Start new Database
     database = new OpposingGroups[Ninja]()
-    //Initialize Two Ninjas and their ObjectWrappers -- probably can remove
-    n1 = new Ninja()
-    n2 = new Ninja()
-    n1Wrap = database.create(n1)
-    n2Wrap = database.create(n2)
-    // Initialize a Set of 10 Ninjas and their set of ObjectWrappers
-    ninjaSet = Set.empty[Ninja]
+    initializeSets
+    initializeSetWrappers
+    initializePairs
+    this
+  }
+
+  // Initialize a Set of 10 Ninjas and their set of ObjectWrappers
+  def initializeSets: Unit = {
     ninjaSet = (1 to 10).map(_ => new Ninja()).toSet
     objectWrapperSet = ninjaSet.map(database.create(_))
-    // Initialize four SetWrappers
-    setWrapperFirst = new SetWrapper[Ninja]()
-    setWrapperSecond = new SetWrapper[Ninja]()
-    setWrapperThird = new SetWrapper[Ninja]()
-    setWrapperFourth = new SetWrapper[Ninja]()
-    // Initialize two Pairs
+  }
+
+  // Initialize two Pairs
+  def initializePairs: Unit = {
     pairFirst = new Pair[Ninja](setWrapperFirst, setWrapperSecond)
     List(setWrapperFirst, setWrapperSecond).foreach(_.setPair(pairFirst))
     pairSecond = new Pair[Ninja](setWrapperThird, setWrapperFourth)
     List(setWrapperThird, setWrapperFourth).foreach(_.setPair(pairSecond))
-    // TODO: Separate into functionally cohesive methods
-    this
+  }
+
+  // Initialize four SetWrappers
+  def initializeSetWrappers: Unit = {
+    setWrapperFirst = new SetWrapper[Ninja]()
+    setWrapperSecond = new SetWrapper[Ninja]()
+    setWrapperThird = new SetWrapper[Ninja]()
+    setWrapperFourth = new SetWrapper[Ninja]()
   }
 }
