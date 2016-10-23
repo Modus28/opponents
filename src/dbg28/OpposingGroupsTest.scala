@@ -38,7 +38,7 @@ class OpposingGroupsTest {
     assertEquals(test.database.opponents(ninja1, ninja2), None)
     test.database.oppose(ninja1, ninja2)
     assertEquals(Some(false), test.database.opponents(ninja2, ninja2))
-    assertEquals(Some(true),test.database.opponents(ninja1, ninja2))
+    assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
   }
 
   /**
@@ -46,7 +46,7 @@ class OpposingGroupsTest {
     */
   @Test
   def testOppose(): Unit = {
-    assertEquals(None,test.database.opponents(ninja1, ninja2))
+    assertEquals(None, test.database.opponents(ninja1, ninja2))
     test.database.oppose(ninja1, ninja2)
     assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
     try {
@@ -58,18 +58,57 @@ class OpposingGroupsTest {
   }
 
 
+  /** Tests addPair
+    *
+    * Good data: Input is a Pair
+    */
   @Test
   def testAddPairGoodData(): Unit = {
     test.testHook.addPairTest(test.pairFirst)
     assert(test.database.getOpposingDatabase.contains(test.pairFirst))
   }
 
+  /** Tests addPair
+    *
+    * Bad Data: No input
+    */
+  @Test
+  def testAddPairBadDataNull(): Unit = {
+    val currentSize = test.database.getOpposingDatabase.size
+    try {
+      test.testHook.addPairTest(null)
+    } catch {
+      case i: IllegalArgumentException =>
+      case e: Exception => fail("Incorrect Exception")
+    }
+    assertEquals(currentSize, test.database.getOpposingDatabase.size)
+  }
+
+
+  /** Tests removePair
+    *
+    * Good Data: Input is a Pair
+    */
   @Test
   def testRemovePairGoodData(): Unit = {
+    assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
     test.testHook.addPairTest(test.pairFirst)
+    assert(test.database.getOpposingDatabase.contains(test.pairFirst))
     test.testHook.removePairTest(Set(test.pairFirst))
     assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
   }
 
-
+  /** Tests removePair
+    *
+    * Bad Data: Input is not a pair
+    */
+  @Test
+  def testRemovePairBadData(): Unit = {
+    try{
+      test.testHook.removePairTest(null)
+    } catch{
+      case i: NullPointerException =>
+      case e: Exception => fail("Incorrect Exception")
+    }
+  }
 }

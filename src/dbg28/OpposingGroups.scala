@@ -40,7 +40,14 @@ class OpposingGroups[N] {
     *
     * @param toAdd the pair to add to the database
     */
-  private def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
+  private def addPair(toAdd: Pair[N]): Unit = {
+    if(Option(toAdd).isDefined) {
+      opposingDatabase += toAdd
+    }
+    else{
+      throw new IllegalArgumentException("Tried to add invalid object")
+    }
+  }
 
   /** Oppose: Updates the database with a new Opposition
     * O(n) worst case, O(1) average case
@@ -105,9 +112,9 @@ class OpposingGroups[N] {
     */
   class TestHook {
     // Calls merge
-    /*def mergeTest(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
+    def mergeTest(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
       merge(xp, xs, yp, ys)
-    }*/
+    }
 
     // Calls addPair
     def addPairTest(toAdd: Pair[N]): Unit = {
@@ -119,10 +126,4 @@ class OpposingGroups[N] {
       removePair(toDel)
     }
   }
-
-  /*// Companion Object for TestHook to easily instantiate it
-  object TestHook {
-    def apply() = new TestHook()
-  }*/
-
 }
