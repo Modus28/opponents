@@ -15,62 +15,60 @@ class ObjectWrapperTest {
   var test: TestTool = _
 
 
-  /** Helper method to setup a database with test data
-    *
+  /**
+    * Helper method: Sets up a database with test data
     */
   @Before
   def createDatabaseWithNinjas(): Unit = {
     test = new TestTool().createDatabaseWithNinjas()
   }
 
-  /**
-    * Tests the Hashcode delegation for ObjectWrapper to its contained value
-    *  Satisfies: Dataflow, Branching
-    *  N/A: Boundary, Compound Boundary,
-    *  N/A: Bad Data, Good Data, Boundary Analysis
+  /** Tests hashCode
+    * Delegation: Doesn't really need to be tested
     *
     */
   @Test
   def hashCodeOverrideTest(): Unit = {
-    val ninja = new Ninja()
-    val objectWrapper = new ObjectWrapper(ninja)
-    assertEquals(ninja.hashCode(), objectWrapper.hashCode())
-    assertNotEquals(ninja.hashCode(), new Ninja().hashCode())
+    assertEquals(test.ninjaSet.head.hashCode(), test.objectWrapperSet.head.hashCode())
+    assertNotEquals(test.ninjaSet.head.hashCode(), new Ninja().hashCode())
   }
 
 
-  /** Tests getOpponents
+  /** Tests getPair
     *
-    * Good data, nominal case, Pair not null
+    * Good data, nominal case,
+    * Dataflow: Container & Pair Defined-Used
     */
   @Test
-  def testGetPairGoodDataNotNull(): Unit = {
+  def testGetPairNominal(): Unit = {
     test.setWrapperFirst.appendSet(test.objectWrapperSet)
     assertEquals(test.objectWrapperSet.head.getPair, test.pairFirst)
   }
 
   /** Tests getOpponents
     *
-    * Good data, nominal case, Pair not null
+    * Good data
+    * Dataflow: Pair Killed-Used
     */
   @Test
-  def testGetPairGoodDataNull(): Unit = {
-    test.setWrapperFirst.appendSet(test.objectWrapperSet)
+  def testGetPairUninitializedValue(): Unit = {
+    test.setWrapperFirst.appendSet(Set(test.objectWrapperSet.head))
     test.setWrapperFirst.setPair(null)
     assertEquals(null, test.objectWrapperSet.head.getPair)
   }
 
   /** Tests getOpponents
     *
-    * Bad data, ObjectWrapper has no SetWrapper
+    * Bad data
+    * Dataflow: Container Used-Defined
     */
   @Test
-  def testGetPairBadData(): Unit = {
+  def testGetPairException(): Unit = {
     try{
       test.objectWrapperSet.head.getContainer.getPair
     } catch{
       case n: NullPointerException => assert(true)
-      case e: Exception=> assert(false, println(e))
+      case e: Exception=> assert(false)
     }
   }
 }
