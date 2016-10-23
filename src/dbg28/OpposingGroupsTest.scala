@@ -29,15 +29,46 @@ class OpposingGroupsTest {
   }
 
 
+  /** Tests create
+    *
+    * Good Data: Input is a Ninja
+    * Branching: First condition true
+    */
+  @Test
+  def testCreateGoodDate(): Unit = {
+    // Defines a function locally so I don't need to type it twice
+    def currentSize = test.database.getOpposingDatabase.size
+    val oldSize = currentSize
+    test.database.create(new Ninja)
+    assertEquals(currentSize, oldSize+1)
+  }
+
+  /** Tests create
+    *
+    * Bad Data: Input is null
+    * Branching: First condition false
+    */
+  @Test
+  def testCreateBadData(): Unit = {
+    try{
+      test.database.create(null)
+    } catch{
+      case i: IllegalArgumentException =>
+      case e: Exception => fail("Incorrect Exception")
+    }
+  }
+
   /** Tests opponents
     *
     * Branching: First condition true
+    *
     */
   @Test
   def testOpponentsBranchingFirstTrue(): Unit = {
     test.database.oppose(ninja1, ninja2)
-    assertEquals(Some(false), test.database.opponents(ninja2, ninja2))
     assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
+    assertEquals(Some(false), test.database.opponents(ninja1, ninja1))
+
   }
 
   /** Tests opponents
@@ -77,7 +108,6 @@ class OpposingGroupsTest {
     }
   }
 
-
   /** Tests oppose
     *
     * Bad data: Inputs are null
@@ -100,9 +130,10 @@ class OpposingGroupsTest {
   @Test
   def testAddPairGoodData(): Unit = {
     test.testHook.removePairTest(Set(test.pairFirst))
-    assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
+    def contains = test.database.getOpposingDatabase.contains(test.pairFirst)
+    assertFalse(contains)
     test.testHook.addPairTest(test.pairFirst)
-    assert(test.database.getOpposingDatabase.contains(test.pairFirst))
+    assert(contains)
   }
 
   /** Tests addPair
@@ -128,9 +159,10 @@ class OpposingGroupsTest {
     */
   @Test
   def testRemovePairGoodData(): Unit = {
-    assert(test.database.getOpposingDatabase.contains(test.pairFirst))
+    def contains = test.database.getOpposingDatabase.contains(test.pairFirst)
+    assert(contains)
     test.testHook.removePairTest(Set(test.pairFirst))
-    assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
+    assertFalse(contains)
   }
 
   /** Tests removePair
@@ -187,10 +219,11 @@ class OpposingGroupsTest {
   @Test
   def testMergeBadDataSamePair(): Unit = {
     // Check that a pair is in the database
-    assert(test.database.getOpposingDatabase.contains(test.pairFirst))
+    def contains = test.database.getOpposingDatabase.contains(test.pairFirst)
+    assert(contains)
     test.testHook.mergeTest(test.sWrapOne, test.sWrapTwo)
     // Check that the Pair was removed
-    assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
+    assertFalse(contains)
     // Check that the sets contain the same objects
     assertEquals(test.sWrapOne.getObjects, test.sWrapTwo.getObjects)
   }
