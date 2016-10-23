@@ -24,7 +24,7 @@ class SetWrapperTest {
 
   /** Tests getOpponents
     *
-    * Nominal case, Good Data: SetWrapper has opponents and containing Pair
+    * Nominal case, Good Data: SetWrapper has opponents
     *
     */
   @Test
@@ -72,5 +72,23 @@ class SetWrapperTest {
 
   /** Tests Constructor
     *
+    * Branching: If condition is true
+    * Good Data: Data is an Object List
     */
+  @Test
+  def testConstructorBranchingTrue(): Unit = {
+    val set = new SetWrapper[Ninja](test.objectWrapperSet)
+    assert(test.objectWrapperSet.forall(_.getContainer.equals(set)))
+  }
+
+  /** Tests Constructor
+    *
+    * Branching: If condition is false
+    * Bad Data: Input is null
+    */
+  @Test
+  def testConstructorBranchingFalse(): Unit = {
+    val set = new SetWrapper[Ninja](null)
+    assert(set.getObjects.isEmpty)
+  }
 }
