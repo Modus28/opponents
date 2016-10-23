@@ -20,7 +20,7 @@ class TestTool {
   var testHook: OpposingGroups[Ninja]#TestHook = _
 
   /**
-    *  Setup: Initialize a database with two Pairs of single Ninjas
+    * Setup: Initialize a database with two Pairs of single Ninjas
     */
   def createDatabaseWithNinjas(): TestTool = {
     // Start new Database. Double variable declaration is necessary for stable outer-inner class identifier

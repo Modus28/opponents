@@ -15,6 +15,7 @@ import scala.collection.mutable
 class OpposingGroups[N] {
 
   // Fields
+
   // The Database: A HashSet of Pairs
   private val opposingDatabase: mutable.HashSet[Pair[N]] = new mutable.HashSet[Pair[N]]()
 
@@ -41,10 +42,10 @@ class OpposingGroups[N] {
     * @param toAdd the pair to add to the database
     */
   private def addPair(toAdd: Pair[N]): Unit = {
-    if(Option(toAdd).isDefined) {
+    if (Option(toAdd).isDefined) {
       opposingDatabase += toAdd
     }
-    else{
+    else {
       throw new IllegalArgumentException("Tried to add invalid object")
     }
   }

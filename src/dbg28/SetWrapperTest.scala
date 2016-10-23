@@ -42,7 +42,6 @@ class SetWrapperTest {
     assertEquals(null, badSetWrapper.getOpponents)
   }
 
-
   /** Tests appendSet
     *
     * Bad Data: Append nothing, Set of Nothing
@@ -72,7 +71,6 @@ class SetWrapperTest {
     assert(test.objectWrapperSet.head.getContainer.equals(test.sWrapOne))
   }
 
-
   /** Tests appendSet
     *
     * Good Data: Append a Set of ObjectWrappers
@@ -84,7 +82,6 @@ class SetWrapperTest {
     test.sWrapOne.appendSet(test.objectWrapperSet)
     assert(test.objectWrapperSet.forall(_.getContainer.equals(test.sWrapOne)))
   }
-
 
   /** Tests Constructor
     *

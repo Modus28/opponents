@@ -10,7 +10,6 @@ package dbg28
 class ObjectWrapper[N](value: N) {
 
   // Fields
-
   private var container: SetWrapper[N] = _ // The SetWrapper that holds this ObjectWrapper
 
   // Methods

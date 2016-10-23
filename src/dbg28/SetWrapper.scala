@@ -7,12 +7,12 @@ package dbg28
   *
   * SetWrapper:  Contains a Set of ObjectWrappers that are not opponents of each other
   */
-class SetWrapper[N] private () {
+class SetWrapper[N] private() {
 
   // Fields
 
   private var objects: Set[ObjectWrapper[N]] = Set[ObjectWrapper[N]]()
-  private var pair: Pair[N] = new Pair[N](this,null)
+  private var pair: Pair[N] = new Pair[N](this, null)
 
   // Methods
 
@@ -42,14 +42,12 @@ class SetWrapper[N] private () {
     */
   def getObjects: Set[ObjectWrapper[N]] = this.objects
 
-
   /**
     * Set the set of ObjectWrappers to the input
     *
     * @param obj the set of ObjectWrappers to set
     */
   def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
-
 
   /** Append a set to this SetWrapper's contained set
     *
@@ -60,8 +58,9 @@ class SetWrapper[N] private () {
     toAppend.foreach(_.setContainer(this))
     // JaCoCo is wrong: All branches have been covered in the above foreach loop, including:
     // toAppend = null, Set(null), Set.Empty, Set containing 1 item, Set containing many items
-
   }
+
+
 
   //  Constructors
 

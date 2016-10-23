@@ -11,9 +11,7 @@ import org.junit.{Before, Test}
 class ObjectWrapperTest {
 
   // Fields
-
   var test: TestTool = _
-
 
   /**
     * Helper method: Sets up a database with test data
@@ -32,7 +30,6 @@ class ObjectWrapperTest {
     assertEquals(test.ninjaSet.head.hashCode(), test.objectWrapperSet.head.hashCode())
     assertNotEquals(test.ninjaSet.head.hashCode(), new Ninja().hashCode())
   }
-
 
   /** Tests getPair
     *
