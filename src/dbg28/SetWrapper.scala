@@ -42,19 +42,13 @@ class SetWrapper[N] {
     */
   def getObjects: Set[ObjectWrapper[N]] = this.objects
 
-  /**
-    * Set the container pointer for a set of objects to this
-    *
-    * @param objects objects to set container pointer for
-    */
-  private[dbg28] def setContainers(objects: Set[ObjectWrapper[N]]): Unit = objects foreach (_.setContainer(this))
 
   /**
     * Set the set of ObjectWrappers to the input
     *
     * @param obj the set of ObjectWrappers to set
     */
-  private[dbg28] def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
+  def setObjects(obj: Set[ObjectWrapper[N]]): Unit = this.objects = obj
 
 
   /** Append a set to this SetWrapper's contained set
@@ -63,7 +57,7 @@ class SetWrapper[N] {
     */
   def appendSet(toAppend: Set[ObjectWrapper[N]]): Unit = {
     setObjects(toAppend ++ objects)
-    setContainers(toAppend)
+    toAppend foreach (_.setContainer(this))
   }
 
   //  Constructors

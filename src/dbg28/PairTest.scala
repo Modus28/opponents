@@ -13,5 +13,4 @@ class PairTest {
   def pairTester(): Unit = {
     assert(true) // Unimplemented
   }
-
 }

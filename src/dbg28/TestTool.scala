@@ -32,20 +32,20 @@ class TestTool {
   def createDatabaseWithNinjas(): TestTool = {
     // Start new Database
     database = new OpposingGroups[Ninja]()
-    initializeSets
-    initializeSetWrappers
-    initializePairs
+    initializeSets()
+    initializeSetWrappers()
+    initializePairs()
     this
   }
 
   // Initialize a Set of 10 Ninjas and their set of ObjectWrappers
-  def initializeSets: Unit = {
+  def initializeSets(): Unit = {
     ninjaSet = (1 to 10).map(_ => new Ninja()).toSet
     objectWrapperSet = ninjaSet.map(database.create(_))
   }
 
   // Initialize two Pairs
-  def initializePairs: Unit = {
+  def initializePairs(): Unit = {
     pairFirst = new Pair[Ninja](setWrapperFirst, setWrapperSecond)
     List(setWrapperFirst, setWrapperSecond).foreach(_.setPair(pairFirst))
     pairSecond = new Pair[Ninja](setWrapperThird, setWrapperFourth)
@@ -53,7 +53,7 @@ class TestTool {
   }
 
   // Initialize four SetWrappers
-  def initializeSetWrappers: Unit = {
+  def initializeSetWrappers(): Unit = {
     setWrapperFirst = new SetWrapper[Ninja]()
     setWrapperSecond = new SetWrapper[Ninja]()
     setWrapperThird = new SetWrapper[Ninja]()

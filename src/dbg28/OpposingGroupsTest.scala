@@ -18,6 +18,9 @@ class OpposingGroupsTest {
   // Test Methods
 
 
+  /**
+    * Helper method: Sets up a database with test data
+    */
   @Before
   def setup(): Unit = {
     test = new TestTool().createDatabaseWithNinjas()
