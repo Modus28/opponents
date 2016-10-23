@@ -111,4 +111,10 @@ class OpposingGroupsTest {
       case e: Exception => fail("Incorrect Exception")
     }
   }
+
+
+  @Test
+  def testMergeGoodData(): Unit = {
+
+  }
 }

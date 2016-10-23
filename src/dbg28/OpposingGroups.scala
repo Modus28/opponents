@@ -57,7 +57,7 @@ class OpposingGroups[N] {
     */
   def oppose(x: ObjectWrapper[N], y: ObjectWrapper[N]): Unit = {
     if (!(x.getPair equals y.getPair)) {
-      merge(x.getPair, x.getContainer, y.getPair, y.getContainer)
+      merge(x.getContainer, y.getContainer)
     }
     else {
       throw new IllegalArgumentException("X and Y already have known opponents status")
@@ -67,15 +67,13 @@ class OpposingGroups[N] {
   /** Combine Pairs - O(1)
     * Adds the values of one pair to another, and removes the original one.
     *
-    * @param xp The pair that will envelop another pair
     * @param xs The set in xp that will have a set added to it
-    * @param yp The pair to be merged into xp
     * @param ys The set in yp that will be added inside xs
     */
-  private def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
-    xp.getOpponentSet(xs).appendSet(ys.getObjects)
+  private def merge(xs: SetWrapper[N], ys: SetWrapper[N]): Unit = {
+    xs.getOpponents.appendSet(ys.getObjects)
     xs.appendSet(ys.getOpponents.getObjects)
-    removePair(Set(yp))
+    removePair(Set(ys.getPair))
   }
 
   /** Remove Pairs from Database - O(1)
@@ -113,7 +111,7 @@ class OpposingGroups[N] {
   class TestHook {
     // Calls merge
     def mergeTest(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
-      merge(xp, xs, yp, ys)
+      merge(xs, ys)
     }
 
     // Calls addPair
