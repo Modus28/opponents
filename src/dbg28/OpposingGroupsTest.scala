@@ -54,7 +54,7 @@ class OpposingGroupsTest {
       assert(false) // Exception should be thrown before this would occur
     } catch {
       case i: IllegalArgumentException => assert(true)
-      case e: Exception => assert(false)
+      case e: Exception => fail("Incorrect Exception")
     }
   }
 }

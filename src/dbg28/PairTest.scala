@@ -10,7 +10,17 @@ import org.junit.{Before, Test}
 class PairTest {
 
   @Test
-  def pairTester(): Unit = {
-    assert(true) // Unimplemented
+  def testGetOpponentSetOnlyFirstBranch(): Unit = {
+    fail("Not Implemented")
+  }
+
+  @Test
+  def testGetOpponentSetOnlySecondBranch(): Unit = {
+    fail("Not Implemented")
+  }
+
+  @Test
+  def testGetOpponentSetOnlyThirdBranch(): Unit = {
+    fail("Not Implemented")
   }
 }

@@ -39,7 +39,7 @@ class SetWrapperTest {
   @Test
   def testGetOpponentsBadData(): Unit = {
     val badSetWrapper = new SetWrapper[Ninja](null)
-    assertEquals(null,badSetWrapper.getOpponents)
+    assertEquals(null, badSetWrapper.getOpponents)
   }
 
 
@@ -52,9 +52,9 @@ class SetWrapperTest {
   def testAppendSetBadData(): Unit = {
     try {
       test.setWrapperFirst.appendSet(null)
-    } catch{
+    } catch {
       case n: NullPointerException => assert(true)
-      case e: Exception => println(e.printStackTrace())
+      case e: Exception => fail("Incorrect Exception")
     }
   }
 

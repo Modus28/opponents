@@ -64,11 +64,11 @@ class ObjectWrapperTest {
     */
   @Test
   def testGetPairException(): Unit = {
-    try{
+    try {
       test.objectWrapperSet.head.getContainer.getPair
-    } catch{
+    } catch {
       case n: NullPointerException => assert(true)
-      case e: Exception=> assert(false)
+      case e: Exception => fail("Incorrect Exception")
     }
   }
 }
