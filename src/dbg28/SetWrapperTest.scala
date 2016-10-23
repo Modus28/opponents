@@ -73,6 +73,12 @@ class SetWrapperTest {
   }
 
 
+  /** Tests appendSet
+    *
+    * Good Data: Append a Set of ObjectWrappers
+    * Max nominal case: Set of size ten
+    *
+    */
   @Test
   def testAppendSetGoodDataMaxNominal(): Unit = {
     test.sWrapOne.appendSet(test.objectWrapperSet)

@@ -57,6 +57,7 @@ class SetWrapper[N] private () {
     */
   def appendSet(toAppend: Set[ObjectWrapper[N]]): Unit = {
     toAppend.foreach(_.setContainer(this))
+    // JaCoCo is wrong: All branches have been covered in the above foreach loop
     setObjects(toAppend ++ objects)
   }
 
