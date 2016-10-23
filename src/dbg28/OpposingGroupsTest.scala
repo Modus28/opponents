@@ -1,8 +1,8 @@
 package dbg28
 
-
 import org.junit.Assert._
 import org.junit.{Before, Test}
+import scala.util.Random
 
 /**
   * EECS 293
@@ -31,15 +31,6 @@ class OpposingGroupsTest {
 
   /** Tests opponents
     *
-    * Branching: First condition false
-    */
-  @Test
-  def testOpponentsBranchingFirstFalse(): Unit = {
-    assertEquals(test.database.opponents(ninja1, ninja2), None)
-  }
-
-  /** Tests opponents
-    *
     * Branching: First condition true
     */
   @Test
@@ -49,10 +40,19 @@ class OpposingGroupsTest {
     assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
   }
 
+  /** Tests opponents
+    *
+    * Branching: First condition false
+    */
+  @Test
+  def testOpponentsBranchingFirstFalse(): Unit = {
+    assertEquals(test.database.opponents(ninja1, ninja2), None)
+  }
+
   /** Tests oppose
     *
-    *  Good Data: Both inputs are different Ninjas
-    *  Branching: First condition true
+    * Good Data: Both inputs are different Ninjas
+    * Branching: First condition true
     */
   @Test
   def testOpposeGoodData(): Unit = {
@@ -139,9 +139,9 @@ class OpposingGroupsTest {
     */
   @Test
   def testRemovePairBadData(): Unit = {
-    try{
+    try {
       test.testHook.removePairTest(null)
-    } catch{
+    } catch {
       case i: NullPointerException =>
       case e: Exception => fail("Incorrect Exception")
     }
@@ -160,9 +160,9 @@ class OpposingGroupsTest {
 
     test.testHook.mergeTest(test.sWrapOne, test.sWrapThree)
 
-    assertEquals(pairsInDatabase-1, test.database.getOpposingDatabase.size) // Check that a pair was removed
+    assertEquals(pairsInDatabase - 1, test.database.getOpposingDatabase.size) // Check that a pair was removed
     assertFalse(test.database.getOpposingDatabase.contains(test.pairSecond)) // Check that the right pair was removed
-    assertEquals(ninjasInSetOne++ninjasInSetTwo, test.sWrapOne.getObjects) // Check that the sets were appended
+    assertEquals(ninjasInSetOne ++ ninjasInSetTwo, test.sWrapOne.getObjects) // Check that the sets were appended
   }
 
 
@@ -174,7 +174,7 @@ class OpposingGroupsTest {
   def testMergeBadDataNoInput(): Unit = {
     try {
       test.testHook.mergeTest(null, null)
-    }catch{
+    } catch {
       case n: NullPointerException =>
       case e: Exception => fail("Wrong exception thrown")
     }
@@ -210,5 +210,35 @@ class OpposingGroupsTest {
     // Verify that the sets are unchanged
     assertEquals(oldObjectSetOne, test.sWrapOne.getObjects)
     assertEquals(oldObjectSetTwo, test.sWrapTwo.getObjects)
+  }
+
+  /** Stress Test: Test the whole data structure on 500 Ninjas
+    * Creates two Sides of 250 Ninjas, and adds them to the database.
+    * The database does not know the true side of each ninja
+    * The end Pairs count in the database is checked against what we predict
+    */
+  @Test
+  def stressTest(): Unit = {
+    // Setup database with a number of Ninjas
+    val database = new OpposingGroups[Ninja]()
+    val size = 500
+    val ninjaSideA, ninjaSideB = (1 to size / 2).map(_ => new Ninja()).toArray
+    val objectSideA = ninjaSideA.map(database.create)
+    val objectSideB = ninjaSideB.map(database.create)
+
+    // Randomly oppose Ninjas between the sides
+    val r = new Random(System.currentTimeMillis())
+    val opposes = 250 // Number of times to execute Oppose randomly
+    var doubleCounter = 0 // Counts the number of randomly occurring duplicates
+    for (_ <- 1 to opposes) {
+      try {
+        database.oppose(objectSideA(r.nextInt(size / 2)), objectSideB(r.nextInt(size / 2)))
+      } catch {
+        case e: IllegalArgumentException => doubleCounter += 1 // Exceptions are normal and ignored
+      }
+    }
+    /* The number of Pairs should be the number of original Pairs minus the number of
+     * oppose calls, plus the number of duplicate opposes that were ignored */
+    assertEquals(size - opposes + doubleCounter, database.getOpposingDatabase.size)
   }
 }

@@ -25,6 +25,7 @@ class PairTest {
     *
     * Good data: SetWrapper object in the Pair as input
     * Branching: First condition is true, second is false
+    * Dataflow: First condition is true, second is false
     */
   @Test
   def testGetOpponentSetOnlyFirstBranch(): Unit = {
@@ -35,6 +36,7 @@ class PairTest {
     *
     * Good data: SetWrapper object in the Pair as input
     * Branching: First condition is false, second is true
+    * Dataflow: First condition is false, second is true
     */
   @Test
   def testGetOpponentSetOnlySecondBranch(): Unit = {
@@ -45,6 +47,7 @@ class PairTest {
     *
     * Bad data: SetWrapper object not in the Pair as input
     * Branching: Both conditions are false
+    * Dataflow: Both conditions are false
     */
   @Test
   def testGetOpponentSetOnlyThirdBranch(): Unit = {
@@ -55,6 +58,16 @@ class PairTest {
       case n: IllegalArgumentException => assert(true)
       case e: Exception => fail("Incorrect Exception")
     }
+  }
+
+  /** Tests getOpponentSet
+    *
+    * Dataflow: Both conditions are true
+    */
+  @Test
+  def testGetOpponentSetAllStatementsTrue(): Unit = {
+    test.pairFirst = new Pair(test.sWrapOne, test.sWrapOne)
+    assertEquals(test.pairFirst.getOpponentSet(test.sWrapOne), test.sWrapOne)
   }
 
   /** Tests getOpponentSet
@@ -72,5 +85,3 @@ class PairTest {
     }
   }
 }
-
-

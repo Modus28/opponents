@@ -56,9 +56,11 @@ class SetWrapper[N] private () {
     * @param toAppend the set to add to our contained set
     */
   def appendSet(toAppend: Set[ObjectWrapper[N]]): Unit = {
-    toAppend.foreach(_.setContainer(this))
-    // JaCoCo is wrong: All branches have been covered in the above foreach loop
     setObjects(toAppend ++ objects)
+    toAppend.foreach(_.setContainer(this))
+    // JaCoCo is wrong: All branches have been covered in the above foreach loop, including:
+    // toAppend = null, Set(null), Set.Empty, Set containing 1 item, Set containing many items
+
   }
 
   //  Constructors
