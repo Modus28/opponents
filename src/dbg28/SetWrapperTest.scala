@@ -27,7 +27,7 @@ class SetWrapperTest {
     * Bad Data: Null Input
     */
   @Test
-  def testSetContainers(): Unit = {
+  def testSetContainerBadData(): Unit = {
     try{
       tester.setWrapperFirst.setContainers(Set(null))
     } catch{
@@ -49,7 +49,7 @@ class SetWrapperTest {
 
   /** Tests getOpponents
     *
-    * Good data, nominal case
+    * Good data, nominal case: SetWrapper has opponents and containing Pair
     */
   @Test
   def testGetOpponentsGoodData(): Unit = {
@@ -58,7 +58,7 @@ class SetWrapperTest {
 
   /** Tests getOpponents
     *
-    * Bad Data
+    * Bad Data: No Pair to get opponents from
     */
   @Test
   def testGetOpponentsBadData(): Unit = {
@@ -75,7 +75,7 @@ class SetWrapperTest {
 
   /** Tests appendSet
     *
-    * Bad Data
+    * Bad Data: Append nothing
     *
     */
   @Test
@@ -90,12 +90,12 @@ class SetWrapperTest {
 
   /** Tests appendSet
     *
-    * Good Data
+    * Good Data: Append a Set of ObjectWrappers
     *
     */
   @Test
   def testAppendSetGoodData(): Unit = {
-    tester.setWrapperFirst.appendSet(tester.objectWrapperSetOfTen)
-    assert(tester.objectWrapperSetOfTen.forall(_.getContainer.equals(tester.setWrapperFirst)))
+    tester.setWrapperFirst.appendSet(tester.objectWrapperSet)
+    assert(tester.objectWrapperSet.forall(_.getContainer.equals(tester.setWrapperFirst)))
   }
 }

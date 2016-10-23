@@ -13,13 +13,12 @@ class TestTool {
   // Global fields
 
   var database: OpposingGroups[Ninja] = _
-  var bigDatabase: OpposingGroups[Ninja] = _
   var n1: Ninja = _
   var n2: Ninja = _
-  var ninjaSetOfTen: Set[Ninja] = _
+  var ninjaSet: Set[Ninja] = _
   var n1Wrap: ObjectWrapper[Ninja] = _
   var n2Wrap: ObjectWrapper[Ninja] = _
-  var objectWrapperSetOfTen: Set[ObjectWrapper[Ninja]] = _
+  var objectWrapperSet: Set[ObjectWrapper[Ninja]] = _
   var setWrapperFirst: SetWrapper[Ninja] = _
   var setWrapperSecond: SetWrapper[Ninja] = _
   var setWrapperThird: SetWrapper[Ninja] = _
@@ -39,10 +38,9 @@ class TestTool {
     n1Wrap = database.create(n1)
     n2Wrap = database.create(n2)
     // Initialize a Set of 10 Ninjas and their set of ObjectWrappers
-    ninjaSetOfTen = Set.empty[Ninja]
-    1 to 10 foreach { _ => ninjaSetOfTen + new Ninja() }
-    objectWrapperSetOfTen = Set.empty[ObjectWrapper[Ninja]]
-    ninjaSetOfTen foreach {objectWrapperSetOfTen + bigDatabase.create(_)}
+    ninjaSet = Set.empty[Ninja]
+    ninjaSet = (1 to 10).map(_ => new Ninja()).toSet
+    objectWrapperSet = ninjaSet.map(database.create(_))
     // Initialize four SetWrappers
     setWrapperFirst = new SetWrapper[Ninja]()
     setWrapperSecond = new SetWrapper[Ninja]()

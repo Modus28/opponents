@@ -26,8 +26,7 @@ class OpposingGroupsTest {
     */
   @Test
   def testCreate(): Unit = {
-    assert(tester.database.getOpposingDatabase.nonEmpty)
-    assert(tester.database.getOpposingDatabase.size.equals(2))
+    assertEquals(12, tester.database.getOpposingDatabase.size)
   }
 
   /**
