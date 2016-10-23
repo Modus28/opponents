@@ -25,6 +25,7 @@ class TestTool {
   var setWrapperFourth: SetWrapper[Ninja] = _
   var pairFirst: Pair[Ninja] = _
   var pairSecond: Pair[Ninja] = _
+  var testHook: OpposingGroups[Ninja]#TestHook = _
 
   /**
     *  Setup: Initialize a database with two Pairs of single Ninjas
@@ -32,6 +33,7 @@ class TestTool {
   def createDatabaseWithNinjas(): TestTool = {
     // Start new Database
     database = new OpposingGroups[Ninja]()
+    testHook = database.TestHook()
     initializeSets()
     initializeSetWrappers()
     initializePairs()
@@ -50,7 +52,7 @@ class TestTool {
     setWrapperSecond = new SetWrapper[Ninja](null)
     setWrapperThird = new SetWrapper[Ninja](null)
     setWrapperFourth = new SetWrapper[Ninja](null)
-    //List(setWrapperFirst,setWrapperSecond, setWrapperThird, setWrapperFourth).foreach(_= new SetWrapper(null))
+    //setWrapperFirst, setWrapperSecond, setWrapperThird, setWrapperFourth = new SetWrapper(null))
   }
 
   // Initialize two Pairs

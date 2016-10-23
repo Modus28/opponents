@@ -22,7 +22,6 @@ class OpposingGroups[N] {
 
   /** Create: Add x to the database inside a new Group - O(1)
     *
-    *
     * @param x the object to add to the known objects list
     * @return the ObjectWrapper containing the input, x
     */
@@ -41,7 +40,7 @@ class OpposingGroups[N] {
     *
     * @param toAdd the pair to add to the database
     */
-  private[dbg28] def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
+  private def addPair(toAdd: Pair[N]): Unit = opposingDatabase += toAdd
 
   /** Oppose: Updates the database with a new Opposition
     * O(n) worst case, O(1) average case
@@ -58,7 +57,6 @@ class OpposingGroups[N] {
     }
   }
 
-
   /** Combine Pairs - O(1)
     * Adds the values of one pair to another, and removes the original one.
     *
@@ -67,7 +65,7 @@ class OpposingGroups[N] {
     * @param yp The pair to be merged into xp
     * @param ys The set in yp that will be added inside xs
     */
-  private[dbg28] def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
+  private def merge(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
     xp.getOpponentSet(xs).appendSet(ys.getObjects)
     xs.appendSet(ys.getOpponents.getObjects)
     removePair(Set(yp))
@@ -77,7 +75,7 @@ class OpposingGroups[N] {
     *
     * @param toDel the pairs to remove from the database
     */
-  private[dbg28] def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
+  private def removePair(toDel: Set[Pair[N]]): Unit = opposingDatabase --= toDel
 
   /** Check if ObjectWrappers are Opponents - O(1)
     *
@@ -99,4 +97,32 @@ class OpposingGroups[N] {
     * @return the opposing group hashset for this object
     */
   def getOpposingDatabase: mutable.HashSet[Pair[N]] = this.opposingDatabase
+
+  // Subclasses
+
+  /** TestHook: Subclass for testing private methods
+    *
+    */
+  class TestHook {
+    // Calls merge
+    def mergeTest(xp: Pair[N], xs: SetWrapper[N], yp: Pair[N], ys: SetWrapper[N]): Unit = {
+      merge(xp, xs, yp, ys)
+    }
+
+    // Calls addPair
+    def addPairTest(toAdd: Pair[N]): Unit = {
+      addPair(toAdd)
+    }
+
+    // Calls removePair
+    def removePairTest(toDel: Set[Pair[N]]): Unit = {
+      removePair(toDel)
+    }
+  }
+
+  // Companion Object for TestHook to easily instantiate it
+  object TestHook {
+    def apply() = new TestHook()
+  }
+
 }

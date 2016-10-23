@@ -57,4 +57,18 @@ class OpposingGroupsTest {
       case e: Exception => fail("Incorrect Exception")
     }
   }
+
+
+  @Test
+  def testAddPairGoodData(): Unit = {
+    test.testHook.addPairTest(test.pairFirst)
+    assert(test.database.getOpposingDatabase.contains(test.pairFirst))
+  }
+
+  @Test
+  def testRemovePairGoodData(): Unit = {
+    test.testHook.addPairTest(test.pairFirst)
+    test.testHook.removePairTest(Set(test.pairFirst))
+    assertFalse(test.database.getOpposingDatabase.contains(test.pairFirst))
+  }
 }

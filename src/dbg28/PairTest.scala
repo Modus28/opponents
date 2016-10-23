@@ -2,6 +2,7 @@ package dbg28
 
 import org.junit.Assert._
 import org.junit.{Before, Test}
+
 /**
   * EECS 293
   * Created by Daniel on 10/20/2016.
@@ -47,7 +48,7 @@ class PairTest {
     */
   @Test
   def testGetOpponentSetOnlyThirdBranch(): Unit = {
-    try{
+    try {
       test.pairFirst.getOpponentSet(test.setWrapperFourth)
     }
     catch {
@@ -62,12 +63,12 @@ class PairTest {
     */
   @Test
   def testGetOpponentSetInputNull(): Unit = {
-    try{
+    try {
       test.pairFirst.getOpponentSet(null)
     }
     catch {
       case n: IllegalArgumentException => assert(true)
-      case e: Exception => println(e)
+      case e: Exception => fail("Incorrect Exception")
     }
   }
 }
