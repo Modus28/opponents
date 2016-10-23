@@ -44,19 +44,20 @@ class TestTool {
     objectWrapperSet = ninjaSet.map(database.create(_))
   }
 
+  // Initialize four SetWrappers
+  def initializeSetWrappers(): Unit = {
+    setWrapperFirst = new SetWrapper[Ninja](null)
+    setWrapperSecond = new SetWrapper[Ninja](null)
+    setWrapperThird = new SetWrapper[Ninja](null)
+    setWrapperFourth = new SetWrapper[Ninja](null)
+    //List(setWrapperFirst,setWrapperSecond, setWrapperThird, setWrapperFourth).foreach(_= new SetWrapper(null))
+  }
+
   // Initialize two Pairs
   def initializePairs(): Unit = {
     pairFirst = new Pair[Ninja](setWrapperFirst, setWrapperSecond)
     List(setWrapperFirst, setWrapperSecond).foreach(_.setPair(pairFirst))
     pairSecond = new Pair[Ninja](setWrapperThird, setWrapperFourth)
     List(setWrapperThird, setWrapperFourth).foreach(_.setPair(pairSecond))
-  }
-
-  // Initialize four SetWrappers
-  def initializeSetWrappers(): Unit = {
-    setWrapperFirst = new SetWrapper[Ninja]()
-    setWrapperSecond = new SetWrapper[Ninja]()
-    setWrapperThird = new SetWrapper[Ninja]()
-    setWrapperFourth = new SetWrapper[Ninja]()
   }
 }

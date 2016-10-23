@@ -7,7 +7,7 @@ package dbg28
   *
   * SetWrapper:  Contains a Set of ObjectWrappers that are not opponents of each other
   */
-class SetWrapper[N] {
+class SetWrapper[N] private () {
 
   // Fields
 

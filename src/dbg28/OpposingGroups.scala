@@ -29,7 +29,7 @@ class OpposingGroups[N] {
   def create(x: N): ObjectWrapper[N] = {
     val wrapper: ObjectWrapper[N] = new ObjectWrapper[N](x)
     val set: SetWrapper[N] = new SetWrapper[N](Set(wrapper))
-    val emptySet: SetWrapper[N] = new SetWrapper[N]()
+    val emptySet: SetWrapper[N] = new SetWrapper[N](null)
     val newPair: Pair[N] = new Pair(set, emptySet)
     set.setPair(newPair)
     emptySet.setPair(newPair)

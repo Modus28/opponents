@@ -38,7 +38,7 @@ class SetWrapperTest {
     */
   @Test
   def testGetOpponentsBadData(): Unit = {
-    val badSetWrapper = new SetWrapper[Ninja]()
+    val badSetWrapper = new SetWrapper[Ninja](null)
     assertEquals(null,badSetWrapper.getOpponents)
   }
 
@@ -68,4 +68,9 @@ class SetWrapperTest {
     test.setWrapperFirst.appendSet(test.objectWrapperSet)
     assert(test.objectWrapperSet.forall(_.getContainer.equals(test.setWrapperFirst)))
   }
+
+
+  /** Tests Constructor
+    *
+    */
 }
