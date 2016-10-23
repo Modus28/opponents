@@ -12,7 +12,7 @@ class SetWrapper[N] {
   // Fields
 
   private var objects: Set[ObjectWrapper[N]] = Set[ObjectWrapper[N]]()
-  private var pair: Pair[N] = _
+  private var pair: Pair[N] = new Pair[N](this,null)
 
   // Methods
 
