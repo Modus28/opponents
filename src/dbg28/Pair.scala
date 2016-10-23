@@ -5,7 +5,7 @@ package dbg28
   * Created by Daniel on 10/16/2016.
   * dbg28@case.edu
   *
-  * Pair: Contains two SetWrappers that are in diferent groups
+  * Pair: Contains two SetWrappers that are in different groups
   */
 class Pair[N](primarySet: SetWrapper[N], secondarySet: SetWrapper[N]) {
 

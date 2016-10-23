@@ -94,7 +94,7 @@ class OpposingGroups[N] {
 
   /** Return the oppose HashSet
     *
-    * @return the opposing group hashset for this object
+    * @return the opposing group hash set for this object
     */
   def getOpposingDatabase: mutable.HashSet[Pair[N]] = this.opposingDatabase
 
