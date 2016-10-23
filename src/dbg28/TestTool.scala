@@ -47,5 +47,6 @@ class TestTool {
     List(sWrapOne, sWapTwo).foreach(_.setPair(pairFirst))
     pairSecond = new Pair[Ninja](sWrapThree, sWrapFour)
     List(sWrapThree, sWrapFour).foreach(_.setPair(pairSecond))
+    database.getOpposingDatabase += (pairFirst, pairSecond)
   }
 }
