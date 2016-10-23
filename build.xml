@@ -16,7 +16,6 @@
 		<property name="scala-reflect.jar" location="${scala.dir}/lib/scala-reflect.jar"/>
 		<property name="scala-compiler.jar" location="${scala.dir}/lib/scala-compiler.jar"/>
 		<property name="build.dir" value="classes" />
-		<property name="build-classes.dir" location="${build.dir}/classes"/>
 		<property name="report.dir" value="report"/>
 		<property name="junit.dir" value="${report.dir}/junit"/>
 		<property name="doc.dir" value="doc"/>
@@ -66,12 +65,9 @@
 		<mkdir dir="${build.dir}/dbg28"/>
 		<scalac
 			destdir="${build.dir}"
+			srcdir="${src.dir}"
 			classpath="${ant.home}/lib/"
 			classpathref="dyna.jars">
-			<include name="*.scala"/>
-			<src>
-				<pathelement location="${src.dir}/dbg28"/>
-			</src>
 		</scalac>
 	</target>
 
@@ -113,6 +109,12 @@
 			</structure>
 			<html destdir="${jacoco.dir}"/>
 		</jacoco:report>
+	</target>
+
+	<!-- Clean Target: Deletes compiled classes and report files -->
+	<target name="clean">
+		<delete dir="classes"/>
+		<delete dir="report"/>
 	</target>
 
 	<!-- Asked for by the server, not listed as required in HW7.pdf -->
