@@ -51,9 +51,8 @@ class OpposingGroupsTest {
     assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
     try {
       test.database.oppose(ninja1, ninja2)
-      assert(false) // Exception should be thrown before this would occur
     } catch {
-      case i: IllegalArgumentException => assert(true)
+      case i: IllegalArgumentException =>
       case e: Exception => fail("Incorrect Exception")
     }
   }

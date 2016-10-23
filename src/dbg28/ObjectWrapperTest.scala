@@ -41,7 +41,7 @@ class ObjectWrapperTest {
     */
   @Test
   def testGetPairNominal(): Unit = {
-    test.setWrapperFirst.appendSet(test.objectWrapperSet)
+    test.sWrapOne.appendSet(test.objectWrapperSet)
     assertEquals(test.objectWrapperSet.head.getPair, test.pairFirst)
   }
 
@@ -52,8 +52,8 @@ class ObjectWrapperTest {
     */
   @Test
   def testGetPairUninitializedValue(): Unit = {
-    test.setWrapperFirst.appendSet(Set(test.objectWrapperSet.head))
-    test.setWrapperFirst.setPair(null)
+    test.sWrapOne.appendSet(Set(test.objectWrapperSet.head))
+    test.sWrapOne.setPair(null)
     assertEquals(null, test.objectWrapperSet.head.getPair)
   }
 

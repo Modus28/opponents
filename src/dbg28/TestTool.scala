@@ -13,18 +13,10 @@ class TestTool {
   // Global fields
 
   var database: OpposingGroups[Ninja] = _
-  var n1: Ninja = _
-  var n2: Ninja = _
   var ninjaSet: Set[Ninja] = _
-  var n1Wrap: ObjectWrapper[Ninja] = _
-  var n2Wrap: ObjectWrapper[Ninja] = _
   var objectWrapperSet: Set[ObjectWrapper[Ninja]] = _
-  var setWrapperFirst: SetWrapper[Ninja] = _
-  var setWrapperSecond: SetWrapper[Ninja] = _
-  var setWrapperThird: SetWrapper[Ninja] = _
-  var setWrapperFourth: SetWrapper[Ninja] = _
-  var pairFirst: Pair[Ninja] = _
-  var pairSecond: Pair[Ninja] = _
+  var sWrapOne, sWapTwo, sWrapThree, sWrapFour: SetWrapper[Ninja] = new SetWrapper[Ninja](null)
+  var pairFirst, pairSecond: Pair[Ninja] = _
   var testHook: OpposingGroups[Ninja]#TestHook = _
 
   /**
@@ -36,8 +28,8 @@ class TestTool {
     val tester = new data.TestHook()
     database = data
     testHook = tester
+    // Call other initialization methods
     initializeSets()
-    initializeSetWrappers()
     initializePairs()
     this
   }
@@ -48,20 +40,12 @@ class TestTool {
     objectWrapperSet = ninjaSet.map(database.create(_))
   }
 
-  // Initialize four SetWrappers
-  def initializeSetWrappers(): Unit = {
-    setWrapperFirst = new SetWrapper[Ninja](null)
-    setWrapperSecond = new SetWrapper[Ninja](null)
-    setWrapperThird = new SetWrapper[Ninja](null)
-    setWrapperFourth = new SetWrapper[Ninja](null)
-    //setWrapperFirst, setWrapperSecond, setWrapperThird, setWrapperFourth = new SetWrapper(null))
-  }
 
   // Initialize two Pairs
   def initializePairs(): Unit = {
-    pairFirst = new Pair[Ninja](setWrapperFirst, setWrapperSecond)
-    List(setWrapperFirst, setWrapperSecond).foreach(_.setPair(pairFirst))
-    pairSecond = new Pair[Ninja](setWrapperThird, setWrapperFourth)
-    List(setWrapperThird, setWrapperFourth).foreach(_.setPair(pairSecond))
+    pairFirst = new Pair[Ninja](sWrapOne, sWapTwo)
+    List(sWrapOne, sWapTwo).foreach(_.setPair(pairFirst))
+    pairSecond = new Pair[Ninja](sWrapThree, sWrapFour)
+    List(sWrapThree, sWrapFour).foreach(_.setPair(pairSecond))
   }
 }

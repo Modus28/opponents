@@ -28,7 +28,7 @@ class PairTest {
     */
   @Test
   def testGetOpponentSetOnlyFirstBranch(): Unit = {
-    assertEquals(test.pairFirst.getOpponentSet(test.setWrapperFirst), test.setWrapperSecond)
+    assertEquals(test.pairFirst.getOpponentSet(test.sWrapOne), test.sWapTwo)
   }
 
   /** Tests getOpponentSet
@@ -38,7 +38,7 @@ class PairTest {
     */
   @Test
   def testGetOpponentSetOnlySecondBranch(): Unit = {
-    assertEquals(test.pairFirst.getOpponentSet(test.setWrapperSecond), test.setWrapperFirst)
+    assertEquals(test.pairFirst.getOpponentSet(test.sWapTwo), test.sWrapOne)
   }
 
   /** Tests getOpponentSet
@@ -49,7 +49,7 @@ class PairTest {
   @Test
   def testGetOpponentSetOnlyThirdBranch(): Unit = {
     try {
-      test.pairFirst.getOpponentSet(test.setWrapperFourth)
+      test.pairFirst.getOpponentSet(test.sWrapFour)
     }
     catch {
       case n: IllegalArgumentException => assert(true)

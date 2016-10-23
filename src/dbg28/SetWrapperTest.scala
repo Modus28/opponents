@@ -29,7 +29,7 @@ class SetWrapperTest {
     */
   @Test
   def testGetOpponentsGoodData(): Unit = {
-    assertEquals(test.setWrapperFirst.getOpponents, test.setWrapperSecond)
+    assertEquals(test.sWrapOne.getOpponents, test.sWapTwo)
   }
 
   /** Tests getOpponents
@@ -45,15 +45,17 @@ class SetWrapperTest {
 
   /** Tests appendSet
     *
-    * Bad Data: Append nothing
+    * Bad Data: Append nothing, Set of Nothing
     *
     */
   @Test
   def testAppendSetBadData(): Unit = {
+    test.sWrapOne.appendSet(Set[ObjectWrapper[Ninja]]())
+    assert(test.sWrapOne.getObjects.isEmpty)
     try {
-      test.setWrapperFirst.appendSet(null)
+      test.sWrapOne.appendSet(null)
     } catch {
-      case n: NullPointerException => assert(true)
+      case n: NullPointerException =>
       case e: Exception => fail("Incorrect Exception")
     }
   }
@@ -61,14 +63,20 @@ class SetWrapperTest {
   /** Tests appendSet
     *
     * Good Data: Append a Set of ObjectWrappers
+    * Min nominal case: Set of size one
     *
     */
   @Test
-  def testAppendSetGoodData(): Unit = {
-    test.setWrapperFirst.appendSet(test.objectWrapperSet)
-    assert(test.objectWrapperSet.forall(_.getContainer.equals(test.setWrapperFirst)))
-    //test.setWrapperFirst.appendSet(Set()) // Tried both of these but they don't satisfy Jacoco's missed branch
-    //test.setWrapperFirst.appendSet(Set(test.objectWrapperSet.head)) 
+  def testAppendSetGoodDataMinNominal(): Unit = {
+    test.sWrapOne.appendSet(Set(test.objectWrapperSet.head))
+    assert(test.objectWrapperSet.head.getContainer.equals(test.sWrapOne))
+  }
+
+
+  @Test
+  def testAppendSetGoodDataMaxNominal(): Unit = {
+    test.sWrapOne.appendSet(test.objectWrapperSet)
+    assert(test.objectWrapperSet.forall(_.getContainer.equals(test.sWrapOne)))
   }
 
 
@@ -79,8 +87,8 @@ class SetWrapperTest {
     */
   @Test
   def testConstructorBranchingTrue(): Unit = {
-    val set = new SetWrapper[Ninja](test.objectWrapperSet)
-    assert(test.objectWrapperSet.forall(_.getContainer.equals(set)))
+    val set = new SetWrapper[Ninja](Set(test.objectWrapperSet.head))
+    assert(test.objectWrapperSet.head.getContainer.equals(set))
   }
 
   /** Tests Constructor
