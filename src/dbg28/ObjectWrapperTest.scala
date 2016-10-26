@@ -62,7 +62,7 @@ class ObjectWrapperTest {
     * Dataflow: Container Used-Defined
     */
   @Test
-  def testGetPairException(): Unit = {
+  def testGetPairContainerNotInitialized(): Unit = {
     try {
       test.objectWrapperSet.head.getContainer.getPair
     } catch {

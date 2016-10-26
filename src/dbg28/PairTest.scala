@@ -28,7 +28,7 @@ class PairTest {
     * Dataflow: First condition is true, second is false
     */
   @Test
-  def testGetOpponentSetOnlyFirstBranch(): Unit = {
+  def testGetOpponentSetInputIsPrimary(): Unit = {
     assertEquals(test.pairFirst.getOpponentSet(test.sWrapOne), test.sWrapTwo)
   }
 
@@ -39,7 +39,7 @@ class PairTest {
     * Dataflow: First condition is false, second is true
     */
   @Test
-  def testGetOpponentSetOnlySecondBranch(): Unit = {
+  def testGetOpponentSetInputIsSecondary(): Unit = {
     assertEquals(test.pairFirst.getOpponentSet(test.sWrapTwo), test.sWrapOne)
   }
 
@@ -49,7 +49,7 @@ class PairTest {
     * Dataflow: Both conditions are false
     */
   @Test
-  def testGetOpponentSetOnlyThirdBranch(): Unit = {
+  def testGetOpponentSetInputIsUnknown(): Unit = {
     try {
       test.pairFirst.getOpponentSet(test.sWrapFour)
     }

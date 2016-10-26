@@ -90,7 +90,7 @@ class SetWrapperTest {
     * Good Data: Data is an Object List
     */
   @Test
-  def testConstructorBranchingTrue(): Unit = {
+  def testConstructorInputIsDefined(): Unit = {
     val set = new SetWrapper[Ninja](Set(test.objectWrapperSet.head))
     assert(test.objectWrapperSet.head.getContainer.equals(set))
   }

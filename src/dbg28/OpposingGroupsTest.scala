@@ -64,7 +64,7 @@ class OpposingGroupsTest {
     *
     */
   @Test
-  def testOpponentsBranchingFirstTrue(): Unit = {
+  def testOpponentsXPairEqualsYPair(): Unit = {
     test.database.oppose(ninja1, ninja2)
     assertEquals(Some(true), test.database.opponents(ninja1, ninja2))
     assertEquals(Some(false), test.database.opponents(ninja1, ninja1))
@@ -76,7 +76,7 @@ class OpposingGroupsTest {
     * Branching: First condition false
     */
   @Test
-  def testOpponentsBranchingFirstFalse(): Unit = {
+  def testOpponentsXPairNotEqualToYPair(): Unit = {
     assertEquals(test.database.opponents(ninja1, ninja2), None)
   }
 
@@ -98,7 +98,7 @@ class OpposingGroupsTest {
     * Branching: First condition false
     */
   @Test
-  def testOpposeBadDataAlreadyKnown(): Unit = {
+  def testOpposeBadDataAlreadyKnownOpposition(): Unit = {
     test.database.oppose(ninja1, ninja2)
     try {
       test.database.oppose(ninja1, ninja2)
@@ -254,14 +254,14 @@ class OpposingGroupsTest {
   def stressTest(): Unit = {
     // Setup database with a number of Ninjas
     val database = new OpposingGroups[Ninja]()
-    val size = 500
+    val r = new Random(System.currentTimeMillis())
+    val size = r.nextInt(10000)
     val ninjaSideA, ninjaSideB = (1 to size / 2).map(_ => new Ninja()).toArray
     val objectSideA = ninjaSideA.map(database.create)
     val objectSideB = ninjaSideB.map(database.create)
 
     // Randomly oppose Ninjas between the sides
-    val r = new Random(System.currentTimeMillis())
-    val opposes = 250 // Number of times to execute Oppose randomly
+    val opposes = r.nextInt(size/2) // Number of times to execute Oppose randomly
     var doubleCounter = 0 // Counts the number of randomly occurring duplicates
     for (_ <- 1 to opposes) {
       try {
@@ -270,8 +270,14 @@ class OpposingGroupsTest {
         case e: IllegalArgumentException => doubleCounter += 1 // Exceptions are normal and ignored
       }
     }
-    /* The number of Pairs should be the number of original Pairs minus the number of
-     * oppose calls, plus the number of duplicate opposes that were ignored */
-    assertEquals(size - opposes + doubleCounter, database.getOpposingDatabase.size)
+
+    /* Total Pairs should be original Pairs minus oppose calls, plus duplicates, accounting for int rounding */
+    assertEquals(size - size%2 - opposes + doubleCounter, database.getOpposingDatabase.size)
+    //println(s"Total size is $size, opposes is $opposes") // Useful for seeing random ninja clan sizes
+
+    // Verifies that no Ninjas on Side A are known Allies of Ninjas on Side B
+    for(objA <- objectSideA; objB <- objectSideB) {
+      assertNotEquals(Some(false),database.opponents(objA, objB))
+    }
   }
 }
